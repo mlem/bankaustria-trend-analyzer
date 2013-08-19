@@ -1,12 +1,12 @@
 describe('array', function() {
     describe('Merger', function() {
-        it('should be able to merge two arrays without duplication', function() {
+        xit('should be able to merge two arrays without duplication', function() {
             var mergedResult = new Merger().merge([1, 2], [2, 3]);
             expect(mergedResult).toEqual([1,2,3]);
         });
 
 
-        it('should be able to merge two maps', function() {
+        xit('should be able to merge two maps', function() {
             var mergedResult = new Merger().merge([{1:1}, {2:2}], [{2:2}, {3:3}]);
             expect(mergedResult).toEqual([{1:1}, {2:2}, {3:3}]);
         });

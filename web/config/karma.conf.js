@@ -3,6 +3,9 @@ module.exports = function (config) {
         basePath: '../',
 
         files: [
+            'app/lib/angular/angular.js',
+            'app/lib/angular/angular-*.js',
+            'test/lib/angular/angular-mocks.js',
             'app/lib/flot/excanvas.js',   // this ordering is needed
             'app/lib/flot/jquery.js',
             'app/lib/flot/jquery.flot.js',

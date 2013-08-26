@@ -12,9 +12,8 @@
 
 <p>Bank Austria Table</p>
 
-<input type="text" ng-model="reference" />           <br />
-<p><input type="radio" ng-model="pos" value="begin" />  begin    </p>
-<p></p><input type="radio" ng-model="pos" value="end" />  end  </p>
+Kontostand zum Beginn: <input type="text" ng-model="startingbalance" placeholder="0" ng-change="calculateFromBegin(startingbalance)"/>
+Kontostand jetzt: <input type="text" ng-model="currentbalance" placeholder="0" ng-change="calculateFromEnd(currentbalance)"  />
 
 <table>
     <thead>
@@ -22,6 +21,7 @@
         <td>Buchungsdatum</td>
         <td>Buchungsbetrag</td>
         <td>Buchungstext</td>
+        <td>Kontobalance</td>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +29,7 @@
         <td>{{item['bookingdate']}}</td>
         <td>{{item['accountchange']}}</td>
         <td>{{item['bookingtext']}}</td>
+        <td>{{item['currentbalance']}}</td>
     </tr>
     </tbody>
 

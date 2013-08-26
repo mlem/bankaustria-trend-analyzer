@@ -13,7 +13,7 @@ describe('Convert', function () {
                 });
 
             expect(result['bookingdate']).toBe(1361401200000);
-            expect(result['accountchange']).toBe(-2, 73);
+            expect(result['accountchange']).toBe(-2.73);
         });
 
         it('can convert a set of objects', function () {
@@ -40,7 +40,7 @@ describe('Convert', function () {
 
             expect(result.length).toBe(2);
             expect(result[0]['bookingdate']).toBe(1361401200000);
-            expect(result[0]['accountchange']).toBe(-2, 73);
+            expect(result[0]['accountchange']).toBe(-2.73);
             expect(result[1]['bookingdate']).toBe(1361487600000);
             expect(result[1]['accountchange']).toBe(2);
         });

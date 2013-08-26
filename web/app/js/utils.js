@@ -3,7 +3,10 @@ function BankAustriaConverter() {
 
     this.convert = function(value) {
         var datum = this.parser.parse(value['Buchungsdatum']);
-        return {'bookingdate': datum.getTime(), 'accountchange': parseInt(value['Betrag'])};
+        var betrag = value['Betrag'];
+        var parsedBetrag = betrag.replace(/\,/, '.');
+        var accountchange = parseFloat(parsedBetrag);
+        return {'bookingdate': datum.getTime(), 'accountchange': accountchange};
     }
 
     this.convertAll = function(data) {

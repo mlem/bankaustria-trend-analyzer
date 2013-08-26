@@ -12,8 +12,12 @@
 
 <p>Bank Austria Table</p>
 
-Kontostand zum Beginn: <input type="text" ng-model="startingbalance" placeholder="0" ng-change="calculateFromBegin(startingbalance)"/>
-Kontostand jetzt: <input type="text" ng-model="currentbalance" placeholder="0" ng-change="calculateFromEnd(currentbalance)"  />
+<div style="width:400px">
+Kontostand zum Beginn: <input type="text" ng-model="startingbalance" placeholder="0"
+                              ng-change="calculateFromBegin(startingbalance)" style="width:50px" />
+Kontostand jetzt: <input type="text" ng-model="currentbalance" placeholder="0"
+                         ng-change="calculateFromEnd(currentbalance)" style="width:50px" />
+</div>
 
 <table>
     <thead>

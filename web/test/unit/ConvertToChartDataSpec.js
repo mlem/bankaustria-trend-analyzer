@@ -14,6 +14,7 @@ describe('Convert', function () {
 
             expect(result['bookingdate']).toBe(1361401200000);
             expect(result['accountchange']).toBe(-2.73);
+            expect(result['bookingtext']).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
         });
 
         it('can convert a set of objects', function () {

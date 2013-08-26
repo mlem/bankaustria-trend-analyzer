@@ -11,17 +11,24 @@
 <body ng-controller="BankListCtrl">
 
 <p>Bank Austria Table</p>
+
+<input type="text" ng-model="reference" />           <br />
+<p><input type="radio" ng-model="pos" value="begin" />  begin    </p>
+<p></p><input type="radio" ng-model="pos" value="end" />  end  </p>
+
 <table>
     <thead>
     <tr>
         <td>Buchungsdatum</td>
         <td>Buchungsbetrag</td>
+        <td>Buchungstext</td>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="item in bookingitems">
         <td>{{item['bookingdate']}}</td>
         <td>{{item['accountchange']}}</td>
+        <td>{{item['bookingtext']}}</td>
     </tr>
     </tbody>
 

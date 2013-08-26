@@ -5,7 +5,7 @@ describe('Convert', function () {
             var result = converter.convert(
                 {   'Buchungsdatum': '21/02/2013',
                     'Valutadatum': '21/02/2013',
-                    'Buchungstext': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                    'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                     'Interne Notiz': '',
                     'W�hrung': 'EUR',
                     'Betrag': '-2,73',
@@ -21,7 +21,7 @@ describe('Convert', function () {
             var converter = new BankAustriaConverter();
             var obj1 = {'Buchungsdatum': '21/02/2013',
                 'Valutadatum': '21/02/2013',
-                'Buchungstext': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                 'Interne Notiz': '',
                 'W�hrung': 'EUR',
                 'Betrag': '-2,73',
@@ -29,7 +29,7 @@ describe('Convert', function () {
             };
             var obj2 = {   'Buchungsdatum': '22/02/2013',
                 'Valutadatum': '22/02/2013',
-                'Buchungstext': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                 'Interne Notiz': '',
                 'W�hrung': 'EUR',
                 'Betrag': '2,00',

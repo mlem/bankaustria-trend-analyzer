@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/jquery-1.8.3.js"></script>
+    <script src="lib/jquery.csv-0.71.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/controllers.js"></script>
 </head>
 <body ng-controller="BankListCtrl">
@@ -18,21 +21,22 @@ Kontostand zum Beginn: <input type="text" ng-model="startingbalance" placeholder
 Kontostand jetzt: <input type="text" ng-model="currentbalance" placeholder="0"
                          ng-change="calculateFromEnd(currentbalance)" style="width:50px" />
 </div>
+<div><input type="file" onchange="angular.element(this).scope().setFile(this)"></div>
 
 <table>
     <thead>
     <tr>
         <td>Buchungsdatum</td>
-        <td>Buchungsbetrag</td>
         <td>Buchungstext</td>
+        <td>Buchungsbetrag</td>
         <td>Kontobalance</td>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="item in bookingitems">
         <td>{{item['bookingdate']}}</td>
-        <td>{{item['accountchange']}}</td>
         <td>{{item['bookingtext']}}</td>
+        <td>{{item['accountchange']}}</td>
         <td>{{item['currentbalance']}}</td>
     </tr>
     </tbody>

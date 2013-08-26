@@ -8,20 +8,20 @@
     <script src="lib/angular/angular.js"></script>
     <script src="js/controllers.js"></script>
 </head>
-<body>
+<body ng-controller="BankListCtrl">
 
 <p>Bank Austria Table</p>
 <table>
     <thead>
-    <th>
+    <tr>
         <td>Buchungsdatum</td>
         <td>Buchungsbetrag</td>
-    </th>
-
+    </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="">
-        <td></td>
+    <tr ng-repeat="item in bookingitems">
+        <td>{{item['bookingdate']}}</td>
+        <td>{{item['accountchange']}}</td>
     </tr>
     </tbody>
 

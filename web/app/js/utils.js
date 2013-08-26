@@ -1,4 +1,19 @@
+function BankAustriaConverter() {
+    this.parser = new DateParser();
 
+    this.convert = function(value) {
+        var datum = this.parser.parse(value['Buchungsdatum']);
+        return {'bookingdate': datum.getTime(), 'accountchange': parseInt(value['Betrag'])};
+    }
+
+    this.convertAll = function(data) {
+        var values = [];
+        for(var key in data) {
+            values.push(this.convert(data[key]));
+        }
+        return values;
+    }
+}
 
 function DateParser() {
     this.parse = function(dateString) {

@@ -1,27 +1,54 @@
 function BankAustriaConverter() {
     this.parser = new DateParser();
 
-    this.convert = function(value) {
-        var date = this.parser.parse(value['Buchungsdatum']);
+    function parseAmount(value) {
         var amount = value['Betrag'];
         var amountWithoutThousand = amount.replace(/\./, '');
         var parsedAmount = amountWithoutThousand.replace(/\,/, '.');
+        return parsedAmount;
+    }
+
+    this.convert = function(value) {
+        var date = this.parser.parse(value['Buchungsdatum']);
+        var parsedAmount = parseAmount(value);
         var accountChange = parseFloat(parsedAmount);
         return {'bookingdate': date.getTime(), 'accountchange': accountChange, 'bookingtext': value['Buchungstext ']};
+    }
+
+    this.sortByBookingdate = function(values) {
+        var sortedValues = values.sort(function(a, b) {
+            a = a['bookingdate'];
+            b = b['bookingdate'];
+            return a - b;
+        });
+        return sortedValues;
     }
 
     this.convertAll = function(data) {
         var values = [];
         for(var key in data) {
-            values.push(this.convert(data[key]));
+            var item = this.convert(data[key]);
+            values.push(item);
+            item['id']=values.length;
         }
+        values = this.sortByBookingdate(values);
         return values;
     }
 }
 
 function DateParser() {
+    function splitDateString(dateString) {
+        if (dateString.indexOf('/') > 0) {
+            return dateString.split('/');
+        }
+        if (dateString.indexOf('.') > 0) {
+            return dateString.split('.');
+        }
+        return [];
+    }
+
     this.parse = function(dateString) {
-        var parts = dateString.split('/');
+        var parts = splitDateString(dateString);
         var year = parseInt(parts[2]);
         var month = parseInt(parts[1]) - 1;
         var days = parseInt(parts[0]);

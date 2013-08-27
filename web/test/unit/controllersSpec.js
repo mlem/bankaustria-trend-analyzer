@@ -37,5 +37,37 @@ describe('controllers', function () {
             expect(scope.currentbalance).toBe(1.00);
             expect(scope.startingbalance).toBe(1.73);
         });
+
+        it('can calculate color for an account change', function(){
+            expect(scope.getColor(0)).toBe('');
+            expect(scope.getColor(-1)).toBe('red');
+            expect(scope.getColor(1)).toBe('green');
+
+        });
+
+        it('can calculate color for a balance', function(){
+            expect(scope.getColorBalance(0)).toBe('');
+            expect(scope.getColorBalance(-1)).toBe('red');
+            expect(scope.getColorBalance(1)).toBe('');
+
+        });
+
+        it('allows input of minus as first symbol', function() {
+            var f = scope.containsValidSpecialCharacters;
+            expect(f('-')).toBe(true);
+            expect(f('1-')).toBe(false);
+            expect(f('.')).toBe(true);
+            expect(f('.0')).toBe(false);
+            expect(f('1.')).toBe(true);
+            expect(f('1.0')).toBe(false);
+            expect(f('-.')).toBe(true);
+            expect(f('-.1')).toBe(false);
+            expect(f(',')).toBe(true);
+        });
+
+        it('can handle input with comma (,)', function() {
+            scope.calculateFromBegin('-123,2');
+            expect(scope.startingbalance).toEqual(-123.2);
+        });
     });
 });

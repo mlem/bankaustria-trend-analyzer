@@ -17,10 +17,16 @@
 
 <div style="width:400px">
 Kontostand zum Beginn: <input type="text" ng-model="startingbalance" placeholder="0"
-                              ng-change="calculateFromBegin(startingbalance)" style="width:50px" />
+        ng-change="calculateFromBegin(startingbalance)" ng-pattern="/[+-]?[0-9]*[.,]?[0-9]{0,2}/" style="width:50px" />
 Kontostand jetzt: <input type="text" ng-model="currentbalance" placeholder="0"
-                         ng-change="calculateFromEnd(currentbalance)" style="width:50px" />
+        ng-change="calculateFromEnd(currentbalance)" style="width:50px" />
 </div>
+
+<div>sortierung nach Datum:
+    aufsteigend <input type="radio" ng-model="orderProp" value="bookingdate">
+    absteigend <input type="radio" ng-model="orderProp" value="-bookingdate">
+</div>
+
 <div><input type="file" onchange="angular.element(this).scope().setFile(this)"></div>
 
 <table>
@@ -33,11 +39,11 @@ Kontostand jetzt: <input type="text" ng-model="currentbalance" placeholder="0"
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in bookingitems">
-        <td>{{item['bookingdate']}}</td>
+    <tr ng-repeat="item in bookingitems | orderBy:orderProp | orderBy:'id'">
+        <td>{{item['bookingdate'] | date:'dd.MM.yyyy'}}</td>
         <td>{{item['bookingtext']}}</td>
-        <td>{{item['accountchange']}}</td>
-        <td>{{item['currentbalance']}}</td>
+        <td class="{{getColor(item['accountchange'])}}">{{item['accountchange'] | currency:""}}</td>
+        <td class="{{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | currency:""}}</td>
     </tr>
     </tbody>
 

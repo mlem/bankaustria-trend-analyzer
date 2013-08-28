@@ -10,6 +10,10 @@ describe('controllers', function () {
         beforeEach(function () {
             scope = {};
             controller = new BankListCtrl(scope);
+            scope.bookingitems = [
+                {'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'},
+                {'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'}
+            ];
         })
 
         it('shows a list of account changes', function () {
@@ -63,6 +67,7 @@ describe('controllers', function () {
             expect(f('-.')).toBe(true);
             expect(f('-.1')).toBe(false);
             expect(f(',')).toBe(true);
+            expect(f(undefined)).toBe(true);
         });
 
         it('can handle input with comma (,)', function() {

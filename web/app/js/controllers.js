@@ -4,30 +4,39 @@
 
 function BankListCtrl($scope) {
 
-    $scope.bookingitems = [
-        {'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'},
-        {'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'}
-    ];
+    var cookieName = "bookingitems";
+    $scope.bookingitems = loadLocalData();
+
 
     $scope.currentbalance = 0;
     $scope.startingbalance = 0;
 
-    $scope.orderProp = "-'bookingdate'"
+    $scope.orderProp = "-bookingdate";
+
+    $scope.displayType = "number:2";
 
     $scope.setFile = function (element) {
         $scope.$apply(function ($scope) {
             $scope.import(element.files[0])
+            $scope.calculateFromBegin($scope.startingbalance);
         });
     };
 
     $scope.loadData = function (event) {
         $scope.$apply(function () {
 
-            var csv = event.target.result;
-            var reader = new CsvReader(csv);
-            var values = reader.asObjects();
-            var converter = new BankAustriaConverter();
-            $scope.bookingitems = converter.convertAll(values);
+            var textFromFile = event.target.result;
+            if (textFromFile.indexOf("trendanalyzer") >= 0) {
+
+            }
+            if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
+
+                var reader = new CsvReader(textFromFile);
+                var values = reader.asObjects();
+                var converter = new BankAustriaConverter();
+                $scope.bookingitems = converter.convertAll(values);
+                localStorage["bookingitems"] = JSON.stringify($scope.bookingitems);
+            }
         });
     };
 
@@ -61,7 +70,9 @@ function BankListCtrl($scope) {
         $scope.currentbalance = balance;
     }
 
-    $scope.containsValidSpecialCharacters = function(referenceBalance) {
+    $scope.containsValidSpecialCharacters = function (referenceBalance) {
+        if (typeof referenceBalance == 'undefined' || referenceBalance.length == 0)
+            return true;
         if (referenceBalance == '-')
             return true;
         var lastChar = referenceBalance[referenceBalance.length - 1];
@@ -92,5 +103,11 @@ function BankListCtrl($scope) {
 
     $scope.getColorBalance = function (value) {
         return value >= 0 ? '' : 'red'
+    }
+
+
+    function loadLocalData() {
+        var data = localStorage["bookingitems"];
+        return typeof data == 'undefined' ? [] : JSON.parse(data);
     }
 }

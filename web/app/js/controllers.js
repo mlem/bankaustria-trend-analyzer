@@ -15,6 +15,14 @@ function BankListCtrl($scope) {
 
     $scope.displayType = "number:2";
 
+    $scope.$on('$viewContentLoaded', function() {
+        $scope.loadData();
+        $scope.calculateFromBegin(0);
+    });
+
+    $scope.init = function() {
+    }
+
     $scope.setFile = function (element) {
         $scope.$apply(function ($scope) {
             $scope.import(element.files[0])

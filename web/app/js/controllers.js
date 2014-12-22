@@ -4,48 +4,37 @@
 
 function BankListCtrl($scope) {
 
-    var cookieName = "bookingitems";
+    //var cookieName = "bookingitems";
     $scope.bookingitems = loadLocalData();
 
+    $scope.$watch('currentbalance', function (newValue) {
+        $scope.calculateFromEnd(newValue);
+    });
 
     $scope.currentbalance = 0;
     $scope.startingbalance = 0;
 
-    $scope.orderProp = "-bookingdate";
+    $scope.orderProp = "-id";
 
     $scope.displayType = "number:2";
 
-    $scope.$on('$viewContentLoaded', function() {
-        $scope.loadData();
-        $scope.calculateFromBegin(0);
-    });
-
-    $scope.init = function() {
-    }
-
     $scope.setFile = function (element) {
-        $scope.$apply(function ($scope) {
-            $scope.import(element.files[0])
-            $scope.calculateFromBegin($scope.startingbalance);
-        });
+        $scope.import(element.files[0])
+        $scope.$apply();
     };
 
     $scope.loadData = function (event) {
-        $scope.$apply(function () {
-
-            var textFromFile = event.target.result;
-            if (textFromFile.indexOf("trendanalyzer") >= 0) {
-
-            }
-            if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
-
-                var reader = new CsvReader(textFromFile);
-                var values = reader.asObjects();
-                var converter = new BankAustriaConverter();
-                $scope.bookingitems = converter.convertAll(values);
-                localStorage["bookingitems"] = JSON.stringify($scope.bookingitems);
-            }
-        });
+        var textFromFile = event.target.result;
+        if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
+            var reader = new CsvReader(textFromFile);
+            var values = reader.asObjects();
+            var converter = new BankAustriaConverter();
+            var convertedItems = converter.convertAll(values);
+            $scope.bookingitems = convertedItems;
+            //localStorage["bookingitems"] = JSON.stringify($scope.bookingitems);
+            $scope.calculateFromEnd($scope.currentbalance);
+            $scope.$apply();
+        }
     };
 
     $scope.import = function (inputfile) {
@@ -59,7 +48,7 @@ function BankListCtrl($scope) {
     };
 
     $scope.parseBalance = function (balance) {
-        if (balance == undefined || balance == null) {
+        if (balance === undefined || balance == null || balance === 0) {
             return 0;
         }
         var balanceWithDot = balance.replace(/\,/, '.');
@@ -71,6 +60,7 @@ function BankListCtrl($scope) {
         var balance = $scope.parseBalance(referenceBalance);
         $scope.startingbalance = balance;
         for (var i = 0; i < $scope.bookingitems.length; i++) {
+            $scope.bookingitems[i]['previousBalance'] = balance;
             balance += $scope.bookingitems[i]['accountchange'];
             balance = parseFloat(balance.toFixed(2));
             $scope.bookingitems[i]['currentbalance'] = balance;
@@ -79,7 +69,10 @@ function BankListCtrl($scope) {
     }
 
     $scope.containsValidSpecialCharacters = function (referenceBalance) {
-        if (typeof referenceBalance == 'undefined' || referenceBalance.length == 0)
+        if(referenceBalance === 0) {
+            return false;
+        }
+        if (typeof referenceBalance === 'undefined' || referenceBalance.length == 0)
             return true;
         if (referenceBalance == '-')
             return true;
@@ -96,6 +89,7 @@ function BankListCtrl($scope) {
         for (var i = $scope.bookingitems.length - 1; i >= 0; i--) {
             $scope.bookingitems[i]['currentbalance'] = balance;
             balance -= $scope.bookingitems[i]['accountchange'];
+            $scope.bookingitems[i]['previousBalance'] = balance;
             balance = parseFloat(balance.toFixed(2));
         }
         $scope.startingbalance = balance;
@@ -115,7 +109,7 @@ function BankListCtrl($scope) {
 
 
     function loadLocalData() {
-        var data = localStorage["bookingitems"];
+        //  var data = localStorage["bookingitems"];
         return typeof data == 'undefined' ? [] : JSON.parse(data);
     }
 }

@@ -15,7 +15,9 @@
 <body ng-controller="BankListCtrl">
 <div class="container">
 
-    <h1 class="text-center">Bank Austria Table <small><a href="https://github.com/mlem/bankaustria-trend-analyzer">git:bankaustria-trend-analyzer</a></small></h1>
+    <h1 class="text-center">Bank Austria Table
+        <small><a href="https://github.com/mlem/bankaustria-trend-analyzer">git:bankaustria-trend-analyzer</a></small>
+    </h1>
 
     <div class="row">
         <div class="col-md-12">
@@ -29,13 +31,14 @@
 
         <div class="col-md-3">
 
-            Kontostand zu Beginn: <input class="form-control" type="text" ng-model="startingbalance" placeholder="0"
-                                         ng-change="calculateFromBegin(startingbalance)"
-                                         ng-pattern="/[+-]?[0-9]*[.,]?[0-9]{0,2}/" />
+            Kontostand zu Beginn: {{startingbalance}}
         </div>
+    </div>
+
+    <div class="row form-group">
+
         <div class="col-md-3">
-            Kontostand jetzt: <input class="form-control" type="text" ng-model="currentbalance" placeholder="0"
-                                     ng-change="calculateFromEnd(currentbalance)" ng-init="0"/>
+            Kontostand jetzt: <input class="form-control" type="text" ng-model="currentbalance" placeholder="0"/>
         </div>
     </div>
     <div class="row">
@@ -46,22 +49,12 @@
 
     <div class="row">
         <div class="col-md-3">
-            absteigend <input type="radio" ng-model="orderProp" value="-bookingdate">
+            absteigend <input type="radio" ng-model="orderProp" value="-id">
         </div>
         <div class="col-md-3">
-            aufsteigend <input type="radio" ng-model="orderProp" value="bookingdate">
+            aufsteigend <input type="radio" ng-model="orderProp" value="id">
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-3">
-            Human display <input type="radio" ng-model="displayType" value="number:2">
-        </div>
-        <div class="col-md-3">
-            Bank display <input type="radio" ng-model="displayType" value="currency:''">
-        </div>
-    </div>
-
     <div class="row">
 
         <div class="col-md-2">
@@ -82,16 +75,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">Buchungsdatum</div>
-        <div class="col-md-6">Buchungstext</div>
+        <div class="col-md-1">Datum</div>
+        <div class="col-md-4">Buchungstext</div>
+        <div class="col-md-2">alter Kontostand</div>
         <div class="col-md-2">Buchungsbetrag</div>
-        <div class="col-md-2">Kontobalance</div>
+        <div class="col-md-2">neuer Kontostand</div>
     </div>
-    <div class="row" ng-repeat="item in bookingitems | filter:query | orderBy:orderProp | orderBy:'id'">
-        <div class="col-md-2">{{item['bookingdate'] | date:'dd.MM.yyyy'}}</div>
-        <div class="col-md-6">{{item['bookingtext'] | limitTo:30}}</div>
+    <div class="row" ng-repeat="item in bookingitems | filter:query | orderBy: orderProp">
+        <div class="col-md-1">{{item['bookingdate'] | date:'dd.MM.yyyy'}}</div>
+        <div class="col-md-4">{{item['bookingtext'] | limitTo:30}}</div>
+        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['previousBalance'] | number:2 }} </div>
         <div class="col-md-2 text-right {{getColor(item['accountchange'])}}">{{item['accountchange'] | number:2 }}</div>
-        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | number:2 }}</div>
+        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | number:2 }}
+        </div>
     </div>
 </div>
 

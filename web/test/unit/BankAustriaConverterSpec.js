@@ -58,8 +58,8 @@ describe('Convert', function () {
             expect(result[1]['id']).toBe(1);
         });
 
-        it('05.07.2013 should have a higher value than 29.05.2013', function () {
-            expect(new Date(2013, 7 - 1, 5).getTime()).toBeGreaterThan(new Date(2013, 5 - 1, 29).getTime());
+        it('30.01.2013 should have a higher value than 01.01.2013', function () {
+            expect(new Date(2013, 1 - 1, 30).getTime()).toBeGreaterThan(new Date(2013, 1 - 1, 1).getTime());
             expect(recentDate.getTime()).toBeGreaterThan(olderDate.getTime());
         });
 
@@ -71,7 +71,7 @@ describe('Convert', function () {
             expect(sortedArray[0]['bookingdate']).toEqual(olderDate.getTime());
             expect(sortedArray[1]['bookingdate']).toEqual(recentDate.getTime());
         });
-        xit('sorter should sort 05.07.2013, 05.07.2013 and 29.05.2013 correctly', function () {
+        it('sorter should sort 05.07.2013, 05.07.2013 and 29.05.2013 correctly', function () {
             var sortedArray = converter.sortByBookingdate([
                 {'bookingdate': recentDate.getTime(), number: 1},
                 {'bookingdate': recentDate.getTime(), number: 2},

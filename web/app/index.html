@@ -84,7 +84,7 @@
     <div class="row" ng-repeat="item in bookingitems | filter:query | orderBy: orderProp">
         <div class="col-md-1">{{item['bookingdate'] | date:'dd.MM.yyyy'}}</div>
         <div class="col-md-4">{{item['bookingtext'] | limitTo:30}}</div>
-        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['previousBalance'] | number:2 }} </div>
+        <div class="col-md-2 text-right {{getColorBalance(item['previousBalance'])}}">{{item['previousBalance'] | number:2 }} </div>
         <div class="col-md-2 text-right {{getColor(item['accountchange'])}}">{{item['accountchange'] | number:2 }}</div>
         <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | number:2 }}
         </div>

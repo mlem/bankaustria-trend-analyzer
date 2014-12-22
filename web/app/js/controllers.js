@@ -69,7 +69,7 @@ function BankListCtrl($scope) {
     }
 
     $scope.containsValidSpecialCharacters = function (referenceBalance) {
-        if(referenceBalance === 0) {
+        if(referenceBalance === 0 || Number(referenceBalance) === referenceBalance) {
             return false;
         }
         if (typeof referenceBalance === 'undefined' || referenceBalance.length == 0)

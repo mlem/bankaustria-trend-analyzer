@@ -19,6 +19,10 @@ function BankAustriaConverter() {
         var sortedValues = values.sort(function(a, b) {
             a = a['bookingdate'];
             b = b['bookingdate'];
+            if(a === b) {
+                return 1;
+            }
+
             return a - b;
         });
         return sortedValues;

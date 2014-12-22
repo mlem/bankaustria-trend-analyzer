@@ -5,13 +5,13 @@ module.exports = function (config) {
         files: [
             'app/lib/angular/angular.js',
             'app/lib/angular/angular-*.js',
-            'test/lib/angular/angular-mocks.js',
             'app/lib/flot/excanvas.js',   // this ordering is needed
             'app/lib/flot/jquery.js',
             'app/lib/flot/jquery.flot.js',
             'app/lib/**/*.js',
-            'test/lib/**/*.js',
             'app/js/**/*.js',
+            'test/lib/**/*.js',
+            'test/lib/angular/angular-mocks.js',
             'test/unit/**/*.js'
         ],
 

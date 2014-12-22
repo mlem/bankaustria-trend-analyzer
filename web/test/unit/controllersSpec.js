@@ -9,12 +9,13 @@ describe('controllers', function () {
         var controller;
         beforeEach(function () {
             scope = {};
+            scope.$watch = function() {};
             controller = new BankListCtrl(scope);
             scope.bookingitems = [
                 {'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'},
                 {'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'}
             ];
-        })
+        });
 
         it('shows a list of account changes', function () {
             expect(scope.bookingitems.length).toBe(2);
@@ -27,7 +28,9 @@ describe('controllers', function () {
         it('calculates with reference account balance', function () {
             scope.calculateFromBegin('1');
 
+            expect(scope.bookingitems[0]['previousBalance']).toBe(1);
             expect(scope.bookingitems[0]['currentbalance']).toBe(-1.73);
+            expect(scope.bookingitems[1]['previousBalance']).toBe(-1.73);
             expect(scope.bookingitems[1]['currentbalance']).toBe(0.27);
             expect(scope.currentbalance).toBe(0.27);
             expect(scope.startingbalance).toBe(1.00);
@@ -36,7 +39,9 @@ describe('controllers', function () {
         it('calculates with reference account balance', function () {
             scope.calculateFromEnd('1');
 
+            expect(scope.bookingitems[0]['previousBalance']).toBe(1.73);
             expect(scope.bookingitems[0]['currentbalance']).toBe(-1);
+            expect(scope.bookingitems[1]['previousBalance']).toBe(-1);
             expect(scope.bookingitems[1]['currentbalance']).toBe(1);
             expect(scope.currentbalance).toBe(1.00);
             expect(scope.startingbalance).toBe(1.73);
@@ -74,5 +79,6 @@ describe('controllers', function () {
             scope.calculateFromBegin('-123,2');
             expect(scope.startingbalance).toEqual(-123.2);
         });
+
     });
 });

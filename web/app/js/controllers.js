@@ -2,6 +2,8 @@
 
 /* Controllers */
 
+angular.module('bankListCtrl', '$scope', [BankListCtrl]);
+
 function BankListCtrl($scope) {
 
     //var cookieName = "bookingitems";

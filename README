@@ -1,1 +1,10 @@
 This file was created by IntelliJ IDEA 12.1.3 for binding GitHub repository
+
+TODO
+====
+
+* Export current state to file (if possible)
+* Import and _MERGE_ files (3 are there, you'll try to import 3 different or partly similar or totally similar)
+* Encrypt file and make it password safe
+* show graphs with angular-charts
+

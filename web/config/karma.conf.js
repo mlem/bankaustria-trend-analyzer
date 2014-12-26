@@ -1,18 +1,15 @@
 module.exports = function (config) {
     config.set({
-        basePath: '../',
+        basePath: '../../',
 
         files: [
-            'app/lib/angular/angular.js',
-            'app/lib/angular/angular-*.js',
-            'app/lib/flot/excanvas.js',   // this ordering is needed
-            'app/lib/flot/jquery.js',
-            'app/lib/flot/jquery.flot.js',
-            'app/lib/**/*.js',
-            'app/js/**/*.js',
-            'test/lib/**/*.js',
-            'test/lib/angular/angular-mocks.js',
-            'test/unit/**/*.js'
+            'bower_components/angular/angular.js',
+            'bower_components/angular-charts/dist/angular-charts.js',
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/jquery-csv/src/jquery.csv.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'web/app/js/**/*.js',
+            'web/test/unit/**/*.js'
         ],
 
         frameworks: ["jasmine"],

@@ -2,7 +2,6 @@
 
 /* Controllers */
 
-angular.module('bankListCtrl', '$scope', [BankListCtrl]);
 
 function BankListCtrl($scope) {
 
@@ -25,14 +24,18 @@ function BankListCtrl($scope) {
         $scope.$apply();
     };
 
+    function convertFileToData(textFromFile) {
+        var reader = new CsvReader(textFromFile, $);
+        var values = reader.asObjects();
+        var converter = new BankAustriaConverter();
+        var convertedItems = converter.convertAll(values);
+        return convertedItems;
+    }
+
     $scope.loadData = function (event) {
         var textFromFile = event.target.result;
         if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
-            var reader = new CsvReader(textFromFile);
-            var values = reader.asObjects();
-            var converter = new BankAustriaConverter();
-            var convertedItems = converter.convertAll(values);
-            $scope.bookingitems = convertedItems;
+            $scope.bookingitems = convertFileToData(textFromFile);
             //localStorage["bookingitems"] = JSON.stringify($scope.bookingitems);
             $scope.calculateFromEnd($scope.currentbalance);
             $scope.$apply();
@@ -71,7 +74,7 @@ function BankListCtrl($scope) {
     }
 
     $scope.containsValidSpecialCharacters = function (referenceBalance) {
-        if(referenceBalance === 0 || Number(referenceBalance) === referenceBalance) {
+        if (referenceBalance === 0 || Number(referenceBalance) === referenceBalance) {
             return false;
         }
         if (typeof referenceBalance === 'undefined' || referenceBalance.length == 0)
@@ -115,3 +118,7 @@ function BankListCtrl($scope) {
         return typeof data == 'undefined' ? [] : JSON.parse(data);
     }
 }
+
+
+BankListCtrl.$inject = ['$scope'];
+

@@ -3,19 +3,24 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function () {
+
     describe('BankListCtrl', function () {
 
         var scope;
         var controller;
-        beforeEach(function () {
-            scope = {};
-            scope.$watch = function() {};
-            controller = new BankListCtrl(scope);
+
+        beforeEach(module('bankaustria-trend-analyzer'));
+
+        beforeEach(inject(function ($rootScope, $controller) {
+
+            scope = $rootScope.$new();
+            controller = $controller(BankListCtrl, {$scope: scope});
+
             scope.bookingitems = [
                 {'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'},
                 {'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'}
             ];
-        });
+        }));
 
         it('shows a list of account changes', function () {
             expect(scope.bookingitems.length).toBe(2);
@@ -47,21 +52,21 @@ describe('controllers', function () {
             expect(scope.startingbalance).toBe(1.73);
         });
 
-        it('can calculate color for an account change', function(){
+        it('can calculate color for an account change', function () {
             expect(scope.getColor(0)).toBe('');
             expect(scope.getColor(-1)).toBe('red');
             expect(scope.getColor(1)).toBe('green');
 
         });
 
-        it('can calculate color for a balance', function(){
+        it('can calculate color for a balance', function () {
             expect(scope.getColorBalance(0)).toBe('');
             expect(scope.getColorBalance(-1)).toBe('red');
             expect(scope.getColorBalance(1)).toBe('');
 
         });
 
-        it('allows input of minus as first symbol', function() {
+        it('allows input of minus as first symbol', function () {
             var f = scope.containsValidSpecialCharacters;
             expect(f('-')).toBe(true);
             expect(f('1-')).toBe(false);
@@ -75,7 +80,7 @@ describe('controllers', function () {
             expect(f(undefined)).toBe(true);
         });
 
-        it('can handle input with comma (,)', function() {
+        it('can handle input with comma (,)', function () {
             scope.calculateFromBegin('-123,2');
             expect(scope.startingbalance).toEqual(-123.2);
         });

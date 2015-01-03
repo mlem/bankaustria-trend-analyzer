@@ -8,7 +8,8 @@ describe('csv file reader', function () {
         beforeEach(function () {
             smallReader = new CsvReader(
                 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;W�hrung;Betrag;Belegdaten;\r\n' +
-                    '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-10,55;"";'
+                    '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-10,55;"";',
+                $
             );
 
             bigReader = new CsvReader(
@@ -24,7 +25,9 @@ describe('csv file reader', function () {
                     'Betrag:\r\n' +
                     '----------\r\n' +
                     'EUR            2,73";\r\n' +
-                    '20/02/2013;20/02/2013;ABHEBUNG AUTOMAT NR. 12705 AM 20.02. UM 15.34 UHR Kaiser Stra�e PK BANKCARD 4;;EUR;-60,00;"";\r\n'
+                    '20/02/2013;20/02/2013;ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
+                    'UM 15.34 UHR Kaiser Stra�e PK BANKCARD 4;;EUR;-60,00;"";\r\n',
+                $
             );
 
 

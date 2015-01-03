@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8">
     <title>My HTML File</title>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/jquery-csv/src/jquery.csv.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container" ng-controller="bankListCtrl">
 
     <h1 class="text-center">Bank Austria Table
         <small><a href="https://github.com/mlem/bankaustria-trend-analyzer">git:bankaustria-trend-analyzer</a></small>
@@ -84,9 +84,12 @@
     <div class="row" ng-repeat="item in bookingitems | filter:query | orderBy: orderProp">
         <div class="col-md-1">{{item['bookingdate'] | date:'dd.MM.yyyy'}}</div>
         <div class="col-md-4">{{item['bookingtext'] | limitTo:30}}</div>
-        <div class="col-md-2 text-right {{getColorBalance(item['previousBalance'])}}">{{item['previousBalance'] | number:2 }} </div>
+        <div class="col-md-2 text-right {{getColorBalance(item['previousBalance'])}}">{{item['previousBalance'] |
+            number:2 }}
+        </div>
         <div class="col-md-2 text-right {{getColor(item['accountchange'])}}">{{item['accountchange'] | number:2 }}</div>
-        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | number:2 }}
+        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | number:2
+            }}
         </div>
     </div>
 </div>

@@ -62,11 +62,8 @@ function DateParser() {
     };
 };
 
-function CsvReader(values) {
-
-    var values = values;
-
-    this.asObjects = function () {
+function CsvReader() {
+    this.asObjects = function (values) {
         return $.csv.toObjects(values, {"separator": ";"});
     }
 };

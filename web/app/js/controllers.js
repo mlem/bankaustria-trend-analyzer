@@ -2,7 +2,6 @@
 
 /* Controllers */
 
-
 function BankListCtrl($scope) {
 
     //var cookieName = "bookingitems";
@@ -25,11 +24,10 @@ function BankListCtrl($scope) {
     };
 
     function convertFileToData(textFromFile) {
-        var reader = new CsvReader(textFromFile, $);
-        var values = reader.asObjects();
+        var reader = new CsvReader();
+        var values = reader.asObjects(textFromFile);
         var converter = new BankAustriaConverter();
-        var convertedItems = converter.convertAll(values);
-        return convertedItems;
+        return converter.convertAll(values);
     }
 
     $scope.loadData = function (event) {

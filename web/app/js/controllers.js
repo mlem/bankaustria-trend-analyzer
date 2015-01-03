@@ -4,8 +4,7 @@
 
 function BankListCtrl($scope) {
 
-    //var cookieName = "bookingitems";
-    $scope.bookingitems = loadLocalData();
+    $scope.bookingitems = {};
 
     $scope.$watch('currentbalance', function (newValue) {
         $scope.calculateFromEnd(newValue);
@@ -58,19 +57,6 @@ function BankListCtrl($scope) {
         return parseFloat(balanceWithDot);
     }
 
-    $scope.calculateFromBegin = function (referenceBalance) {
-        if ($scope.containsValidSpecialCharacters(referenceBalance)) return;
-        var balance = $scope.parseBalance(referenceBalance);
-        $scope.startingbalance = balance;
-        for (var i = 0; i < $scope.bookingitems.length; i++) {
-            $scope.bookingitems[i]['previousBalance'] = balance;
-            balance += $scope.bookingitems[i]['accountchange'];
-            balance = parseFloat(balance.toFixed(2));
-            $scope.bookingitems[i]['currentbalance'] = balance;
-        }
-        $scope.currentbalance = balance;
-    }
-
     $scope.containsValidSpecialCharacters = function (referenceBalance) {
         if (referenceBalance === 0 || Number(referenceBalance) === referenceBalance) {
             return false;
@@ -105,15 +91,8 @@ function BankListCtrl($scope) {
         return value > 0 ? 'green' : 'red'
     }
 
-
     $scope.getColorBalance = function (value) {
         return value >= 0 ? '' : 'red'
-    }
-
-
-    function loadLocalData() {
-        //  var data = localStorage["bookingitems"];
-        return typeof data == 'undefined' ? [] : JSON.parse(data);
     }
 }
 

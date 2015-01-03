@@ -31,17 +31,6 @@ describe('controllers', function () {
         });
 
         it('calculates with reference account balance', function () {
-            scope.calculateFromBegin('1');
-
-            expect(scope.bookingitems[0]['previousBalance']).toBe(1);
-            expect(scope.bookingitems[0]['currentbalance']).toBe(-1.73);
-            expect(scope.bookingitems[1]['previousBalance']).toBe(-1.73);
-            expect(scope.bookingitems[1]['currentbalance']).toBe(0.27);
-            expect(scope.currentbalance).toBe(0.27);
-            expect(scope.startingbalance).toBe(1.00);
-        });
-
-        it('calculates with reference account balance', function () {
             scope.calculateFromEnd('1');
 
             expect(scope.bookingitems[0]['previousBalance']).toBe(1.73);
@@ -78,11 +67,6 @@ describe('controllers', function () {
             expect(f('-.1')).toBe(false);
             expect(f(',')).toBe(true);
             expect(f(undefined)).toBe(true);
-        });
-
-        it('can handle input with comma (,)', function () {
-            scope.calculateFromBegin('-123,2');
-            expect(scope.startingbalance).toEqual(-123.2);
         });
 
     });

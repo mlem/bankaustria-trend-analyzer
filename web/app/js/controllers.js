@@ -13,7 +13,7 @@ function BankListCtrl($scope) {
     $scope.currentbalance = 0;
     $scope.startingbalance = 0;
 
-    $scope.orderProp = "-id";
+    $scope.orderProp = "artificialId";
 
     $scope.displayType = "number:2";
 

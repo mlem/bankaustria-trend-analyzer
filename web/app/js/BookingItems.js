@@ -36,33 +36,68 @@ BookingItem.prototype.hashCode = function () {
 
 BookingItems = function () {
     this.items = [];
-}
+};
 
+BookingItems.prototype.isBookingdateInTheMiddleOfArray = function (item) {
+    return item.bookingdate > this.items[0].bookingdate && item.bookingdate < this.items[this.items.length - 1].bookingdate;
+};
+BookingItems.prototype.isBookingdateYounger = function (item) {
+    return item.bookingdate > this.items[this.items.length - 1].bookingdate;
+};
+BookingItems.prototype.isBookingdateOlder = function (item) {
+    return item.bookingdate <= this.items[0].bookingdate;
+};
+BookingItems.prototype.addItem = function (item) {
+    if (this.items.length === 0) {
+        this.items.push(item);
+    } else if (this.isBookingdateInTheMiddleOfArray(item)) {
+        this.innerMerge(item);
+    } else if (this.isBookingdateYounger(item)) {
+        this.items.push(item);
+    } else if (this.isBookingdateOlder(item)) {
+        this.items.unshift(item);
+    }
+};
+BookingItems.prototype.innerMerge = function (item) {
+    for (var i = 0; i < this.items.length; i++) {
+        var firstTimeInArrayWhereItemIsOlder = item.bookingdate < this.items[i].bookingdate;
+        if (firstTimeInArrayWhereItemIsOlder) {
+            var laterPart = this.items.splice(i);
+            this.items.push(item);
+            this.items.push.apply(this.items, laterPart);
+            return;
+        }
+    }
+};
+BookingItems.prototype.resetArtificialIds = function () {
+    for (var i = 0; i < this.items.length; i++) {
+        this.items[i].artificialId = i;
+    }
+}
+BookingItems.prototype.itemExists = function (hashes, item) {
+    for (var hashKey in hashes) {
+        if (hashes[hashKey] === item.hash) {
+            return true;
+        }
+    }
+    return false;
+};
+/**
+ * 3 kinds of merging:
+ * * aligning items at the beginning of the array (old data)
+ * * aligning items at the end of the array (new data)
+ * * aligning items in the middle of the array (most complex - some data)
+ * @param new items
+ */
 BookingItems.prototype.merge = function (arrayToMerge) {
     var hashes = this.items.map(function (item) {
         return item.hash;
     });
     for (var itemKey in arrayToMerge) {
         var item = arrayToMerge[itemKey];
-        var itemHash = item.hash;
-        var found = false;
-        for (var hash in hashes) {
-            if (hashes[hash] === itemHash) {
-                found = true;
-            }
-        }
-        if (!found) {
-            if(this.items.length === 0) {
-                this.items.push(item);
-            } else if (this.items[0].bookingdate > item.bookingdate) {
-                this.items.push(item);
-            } else {
-                this.items.unshift(item);
-            }
+        if (!this.itemExists(hashes, item)) {
+            this.addItem(item);
         }
     }
-
-    for (var i = 0; i < this.items.length; i++) {
-        this.items[i].artificialId = i;
-    }
-}
+    this.resetArtificialIds();
+};

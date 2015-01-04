@@ -3,95 +3,129 @@ describe('BookingItems', function () {
     describe('merge is merging in right order', function () {
 
         var bookingItems;
-        var firstItem;
-        var secondItem;
-        var thirdItem;
+        var middleItem;
+        var youngestItem;
+        var oldestItem;
 
-        beforeEach(function() {
+        beforeEach(function () {
             bookingItems = new BookingItems();
-            firstItem = new BookingItem();
-            firstItem.artificialId = 0;
-            firstItem.accountchange = 1;
+            middleItem = new BookingItem();
+            middleItem.artificialId = 0;
+            middleItem.accountchange = 1;
             // 21/02/2013
-            firstItem.bookingdate = 1361401200000;
-            firstItem.bookingtext = 'first';
-            firstItem.currentbalance = 0;
-            firstItem.previousbalance = 0;
-            firstItem.hash = firstItem.hashCode();
-            bookingItems.items = [firstItem];
+            middleItem.bookingdate = 1361401200000;
+            middleItem.bookingtext = 'first';
+            middleItem.currentbalance = 0;
+            middleItem.previousbalance = 0;
+            middleItem.hash = middleItem.hashCode();
+            bookingItems.items = [middleItem];
 
-            secondItem = new BookingItem();
-            secondItem.artificialId = 1;
-            secondItem.accountchange = 2;
+            youngestItem = new BookingItem();
+            youngestItem.artificialId = 1;
+            youngestItem.accountchange = 2;
             // 22/02/2013
-            secondItem.bookingdate = 1361487600000;
-            secondItem.bookingtext = 'sec';
-            secondItem.currentbalance = 0;
-            secondItem.previousbalance = 0;
-            secondItem.hash = secondItem.hashCode();
+            youngestItem.bookingdate = 1361487600000;
+            youngestItem.bookingtext = 'sec';
+            youngestItem.currentbalance = 0;
+            youngestItem.previousbalance = 0;
+            youngestItem.hash = youngestItem.hashCode();
 
-            thirdItem = new BookingItem();
-            thirdItem.artificialId = 2;
-            thirdItem.accountchange = 2;
-            // 22/02/2013
-            thirdItem.bookingdate = 1361314800000;
-            thirdItem.bookingtext = 'third';
-            thirdItem.currentbalance = 0;
-            thirdItem.previousbalance = 0;
-            thirdItem.hash = thirdItem.hashCode();
+            oldestItem = new BookingItem();
+            oldestItem.artificialId = 2;
+            oldestItem.accountchange = 2;
+            // 20/02/2013
+            oldestItem.bookingdate = 1361314800000;
+            oldestItem.bookingtext = 'third';
+            oldestItem.currentbalance = 0;
+            oldestItem.previousbalance = 0;
+            oldestItem.hash = oldestItem.hashCode();
 
         });
 
         it('when new item has later date', function () {
-            bookingItems.merge([secondItem]);
+            bookingItems.merge([youngestItem]);
 
             expect(bookingItems.items.length).toBe(2);
             expect(bookingItems.items[0].artificialId).toBe(0);
-            expect(bookingItems.items[0].hash).toBe(secondItem.hash);
+            expect(bookingItems.items[0].hash).toBe(middleItem.hash);
             expect(bookingItems.items[1].artificialId).toBe(1);
-            expect(bookingItems.items[1].hash).toBe(firstItem.hash);
+            expect(bookingItems.items[1].hash).toBe(youngestItem.hash);
         });
 
 
         it('when new item has earlier date', function () {
-            bookingItems.merge([thirdItem]);
+            bookingItems.merge([oldestItem]);
 
             expect(bookingItems.items.length).toBe(2);
             expect(bookingItems.items[0].artificialId).toBe(0);
-            expect(bookingItems.items[0].hash).toBe(firstItem.hash);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
             expect(bookingItems.items[1].artificialId).toBe(1);
-            expect(bookingItems.items[1].hash).toBe(thirdItem.hash);
+            expect(bookingItems.items[1].hash).toBe(middleItem.hash);
         });
 
         it('when new item has earlier date with multiple items', function () {
-            bookingItems.merge([thirdItem, firstItem, secondItem]);
+            bookingItems.merge([oldestItem, middleItem, youngestItem]);
 
             expect(bookingItems.items.length).toBe(3);
             expect(bookingItems.items[0].artificialId).toBe(0);
-            expect(bookingItems.items[0].hash).toBe(secondItem.hash);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
             expect(bookingItems.items[1].artificialId).toBe(1);
-            expect(bookingItems.items[1].hash).toBe(firstItem.hash);
+            expect(bookingItems.items[1].hash).toBe(middleItem.hash);
             expect(bookingItems.items[2].artificialId).toBe(2);
-            expect(bookingItems.items[2].hash).toBe(thirdItem.hash);
+            expect(bookingItems.items[2].hash).toBe(youngestItem.hash);
         });
 
         it('when merging a view times', function () {
-            bookingItems.merge([thirdItem, firstItem]);
+            bookingItems.merge([oldestItem, middleItem]);
 
             expect(bookingItems.items.length).toBe(2);
             expect(bookingItems.items[0].artificialId).toBe(0);
-            expect(bookingItems.items[0].hash).toBe(firstItem.hash);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
             expect(bookingItems.items[1].artificialId).toBe(1);
-            expect(bookingItems.items[1].hash).toBe(thirdItem.hash);
+            expect(bookingItems.items[1].hash).toBe(middleItem.hash);
 
-            bookingItems.merge([firstItem, secondItem]);
+            bookingItems.merge([middleItem, youngestItem]);
             expect(bookingItems.items.length).toBe(3);
             expect(bookingItems.items[0].artificialId).toBe(0);
-            expect(bookingItems.items[0].hash).toBe(secondItem.hash);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
             expect(bookingItems.items[1].artificialId).toBe(1);
-            expect(bookingItems.items[1].hash).toBe(firstItem.hash);
+            expect(bookingItems.items[1].hash).toBe(middleItem.hash);
             expect(bookingItems.items[2].artificialId).toBe(2);
-            expect(bookingItems.items[2].hash).toBe(thirdItem.hash);
+            expect(bookingItems.items[2].hash).toBe(youngestItem.hash);
         });
+
+        it('when merging new items, which are in wrong sortorder', function () {
+            bookingItems.items = [oldestItem];
+            bookingItems.merge([youngestItem, middleItem]);
+            expect(bookingItems.items.length).toBe(3);
+            expect(bookingItems.items[0].artificialId).toBe(0);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
+            expect(bookingItems.items[1].artificialId).toBe(1);
+            expect(bookingItems.items[1].hash).toBe(middleItem.hash);
+            expect(bookingItems.items[2].artificialId).toBe(2);
+            expect(bookingItems.items[2].hash).toBe(youngestItem.hash);
+        });
+
+        it('when merging data which is inbetween', function() {
+            bookingItems.items = [oldestItem,youngestItem];
+            bookingItems.merge([middleItem]);
+            expect(bookingItems.items.length).toBe(3);
+            expect(bookingItems.items[0].artificialId).toBe(0);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
+            expect(bookingItems.items[1].artificialId).toBe(1);
+            expect(bookingItems.items[1].hash).toBe(middleItem.hash);
+            expect(bookingItems.items[2].artificialId).toBe(2);
+            expect(bookingItems.items[2].hash).toBe(youngestItem.hash);
+        });
+
+        it('when merging the first time', function() {
+            bookingItems.items = [];
+            bookingItems.merge([oldestItem]);
+            expect(bookingItems.items.length).toBe(1);
+            expect(bookingItems.items[0].artificialId).toBe(0);
+            expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
+        })
+
+
     });
 });

@@ -103,21 +103,21 @@ describe('controllers', function () {
             event = {target: {result: bigCsvText}};
             scope.loadData(event);
             expect(scope.bookingitems.items.length).toBe(3);
-            expect(scope.bookingitems.items[0].currentbalance).toBe(62.73);
-            expect(scope.bookingitems.items[0].previousbalance).toBe(73.28);
-            expect(scope.bookingitems.items[0].bookingdate).toBe(1361487600000);
-            expect(scope.bookingitems.items[0].accountchange).toBe(-10.55);
-            expect(scope.bookingitems.items[0].bookingtext).toBe('MCDONALDS 66 0066  K4 22.02.UM 15.26     O');
-            expect(scope.bookingitems.items[1].currentbalance).toBe(60);
-            expect(scope.bookingitems.items[1].previousbalance).toBe(62.73);
+            expect(scope.bookingitems.items[2].currentbalance).toBe(0);
+            expect(scope.bookingitems.items[2].previousbalance).toBe(10.55);
+            expect(scope.bookingitems.items[2].bookingdate).toBe(1361487600000);
+            expect(scope.bookingitems.items[2].accountchange).toBe(-10.55);
+            expect(scope.bookingitems.items[2].bookingtext).toBe('MCDONALDS 66 0066  K4 22.02.UM 15.26     O');
+            expect(scope.bookingitems.items[1].currentbalance).toBe(10.55);
+            expect(scope.bookingitems.items[1].previousbalance).toBe(13.28);
             expect(scope.bookingitems.items[1].bookingdate).toBe(1361401200000);
             expect(scope.bookingitems.items[1].accountchange).toBe(-2.73);
             expect(scope.bookingitems.items[1].bookingtext).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
-            expect(scope.bookingitems.items[2].currentbalance).toBe(0);
-            expect(scope.bookingitems.items[2].previousbalance).toBe(60);
-            expect(scope.bookingitems.items[2].bookingdate).toBe(1361314800000);
-            expect(scope.bookingitems.items[2].accountchange).toBe(-60.00);
-            expect(scope.bookingitems.items[2].bookingtext).toBe('ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
+            expect(scope.bookingitems.items[0].currentbalance).toBe(13.28);
+            expect(scope.bookingitems.items[0].previousbalance).toBe(73.28);
+            expect(scope.bookingitems.items[0].bookingdate).toBe(1361314800000);
+            expect(scope.bookingitems.items[0].accountchange).toBe(-60.00);
+            expect(scope.bookingitems.items[0].bookingtext).toBe('ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
                 'UM 15.34 UHR Kaiser Stra�e PK BANKCARD 4');
 
         })

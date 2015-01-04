@@ -1,3 +1,31 @@
+String.prototype.hashCode = function () {
+    var hash = 0, i, chr, len;
+    if (this.length == 0) return hash;
+    for (i = 0, len = this.length; i < len; i++) {
+        chr = this.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
+
+Number.prototype.hashCode = function () {
+    var hash = 0;
+    hash = ((hash << 5) - hash) + this;
+    hash |= 0; // Convert to 32bit integer
+    return hash;
+};
+
+function hashCode(object) {
+    var result = object.bookingdate.hashCode();
+    result = 31 * result + object.accountchange.hashCode();
+    result = 31 * result + object.bookingtext.hashCode();
+    return result;
+};
+
+
+
+
 function BankAustriaConverter() {
     this.parser = new DateParser();
 
@@ -8,11 +36,16 @@ function BankAustriaConverter() {
         return parsedAmount;
     }
 
+
+
     this.convert = function(value) {
         var date = this.parser.parse(value['Buchungsdatum']);
         var parsedAmount = parseAmount(value);
         var accountChange = parseFloat(parsedAmount);
-        return {'bookingdate': date.getTime(), 'accountchange': accountChange, 'bookingtext': value['Buchungstext ']};
+        var object = {'bookingdate': date.getTime(), 'accountchange': accountChange, 'bookingtext': value['Buchungstext ']};
+        var hash = hashCode(object);
+        object.hash = hash;
+        return  object;
     }
 
     this.sortByBookingdate = function(values) {

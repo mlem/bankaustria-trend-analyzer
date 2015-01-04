@@ -32,7 +32,8 @@ function BankListCtrl($scope) {
     $scope.loadData = function (event) {
         var textFromFile = event.target.result;
         if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
-            $scope.bookingitems = convertFileToData(textFromFile);
+            var convertedItems = convertFileToData(textFromFile);
+            $scope.bookingitems = new Merger().merge(bookingitems, convertedItems);
             //localStorage["bookingitems"] = JSON.stringify($scope.bookingitems);
             $scope.calculateFromEnd($scope.currentbalance);
             $scope.$apply();
@@ -78,7 +79,7 @@ function BankListCtrl($scope) {
         for (var i = $scope.bookingitems.length - 1; i >= 0; i--) {
             $scope.bookingitems[i]['currentbalance'] = balance;
             balance -= $scope.bookingitems[i]['accountchange'];
-            $scope.bookingitems[i]['previousBalance'] = balance;
+            $scope.bookingitems[i]['previousbalance'] = balance;
             balance = parseFloat(balance.toFixed(2));
         }
         $scope.startingbalance = balance;

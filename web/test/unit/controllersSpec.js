@@ -33,9 +33,10 @@ describe('controllers', function () {
         it('calculates with reference account balance', function () {
             scope.calculateFromEnd('1');
 
-            expect(scope.bookingitems[0]['previousBalance']).toBe(1.73);
+
+            expect(scope.bookingitems[0]['previousbalance']).toBe(1.73);
             expect(scope.bookingitems[0]['currentbalance']).toBe(-1);
-            expect(scope.bookingitems[1]['previousBalance']).toBe(-1);
+            expect(scope.bookingitems[1]['previousbalance']).toBe(-1);
             expect(scope.bookingitems[1]['currentbalance']).toBe(1);
             expect(scope.currentbalance).toBe(1.00);
             expect(scope.startingbalance).toBe(1.73);

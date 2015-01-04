@@ -88,18 +88,5 @@ describe('csv file reader', function () {
             expectSecondDatasetToEqual(secondObject);
         });
 
-        it('can merge data with new data', function () {
-
-            var reader = new CsvReader();
-            var objectArray = reader.asObjects(smallCsvText);
-            expect(objectArray.length).toBe(1);
-            var bigObjectArray = reader.asObjects(bigCsvText);
-            expect(bigObjectArray.length).toBe(3);
-            var resultObject = new Merger().merge(objectArray, bigObjectArray);
-            expect(resultObject.length).toBe(3);
-            var keys = Object.keys(resultObject);
-            expectFirstDatasetToEqual(resultObject[keys[0]]);
-            expectSecondDatasetToEqual(resultObject[keys[1]]);
-        });
     });
 });

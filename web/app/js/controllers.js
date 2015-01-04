@@ -33,7 +33,7 @@ function BankListCtrl($scope) {
         var textFromFile = event.target.result;
         if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
             var convertedItems = convertFileToData(textFromFile);
-            $scope.bookingitems = new Merger().merge($scope.bookingitems, convertedItems);
+            $scope.bookingitems.merge(convertedItems);
             $scope.calculateFromEnd($scope.currentbalance);
             $scope.$apply();
         }
@@ -75,11 +75,11 @@ function BankListCtrl($scope) {
         if ($scope.containsValidSpecialCharacters(referenceBalance)) return;
         var balance = $scope.parseBalance(referenceBalance);
         $scope.currentbalance = balance;
-        for (var i = $scope.bookingitems.length - 1; i >= 0; i--) {
-            $scope.bookingitems[i].currentbalance = balance;
-            balance -= $scope.bookingitems[i].accountchange;
+        for (var i = $scope.bookingitems.items.length - 1; i >= 0; i--) {
+            $scope.bookingitems.items[i].currentbalance = balance;
+            balance -= $scope.bookingitems.items[i].accountchange;
             balance = parseFloat(balance.toFixed(2));
-            $scope.bookingitems[i].previousbalance = balance;
+            $scope.bookingitems.items[i].previousbalance = balance;
         }
         $scope.startingbalance = balance;
     }

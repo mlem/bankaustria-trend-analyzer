@@ -20,31 +20,18 @@ function BankAustriaConverter() {
         object.bookingtext = value['Buchungstext '];
         object.hash = object.hashCode();
         return  object;
-    }
-
-    this.sortByBookingdate = function(values) {
-        var sortedValues = values.sort(function(a, b) {
-            a = a['bookingdate'];
-            b = b['bookingdate'];
-            if(a === b) {
-                return 1;
-            }
-
-            return a - b;
-        });
-        return sortedValues;
-    }
+    };
 
     this.convertAll = function(data) {
         var values = [];
         for(var key in data) {
             var item = this.convert(data[key]);
             values.push(item);
+            item.artificialId = values.length;
             item['id']=values.length;
         }
-        values = this.sortByBookingdate(values);
         return values;
-    }
+    };
 }
 
 function DateParser() {
@@ -63,8 +50,6 @@ function DateParser() {
         var year = parseInt(parts[2]);
         var month = parseInt(parts[1]) - 1;
         var days = parseInt(parts[0]);
-
-        //console.log('result: ' + year + '-' + month + '-'+ days)
         return new Date(year, month, days);
     };
 };
@@ -72,17 +57,5 @@ function DateParser() {
 function CsvReader() {
     this.asObjects = function (values) {
         return $.csv.toObjects(values, {"separator": ";"});
-    }
-};
-
-function Merger() {
-    this.merge = function (a, b) {
-        if(a === undefined) return b;
-        var result = a.slice(0);
-        for (var bKey in b) {
-            result[bKey] = b[bKey];
-        }
-        return result;
-
-    }
+    };
 };

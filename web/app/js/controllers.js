@@ -37,6 +37,24 @@ function BankListCtrl($scope) {
             $scope.calculateFromEnd($scope.currentbalance);
             $scope.$apply();
         }
+        if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
+            var reader = new CsvReader();
+            var values = reader.asObjects(textFromFile);
+            values.every(function(obj) {
+                obj.accountchange =  $scope.parseBalance(obj.accountchange);
+                obj.currentbalance = $scope.parseBalance(obj.currentbalance);
+                obj.previousbalance = $scope.parseBalance(obj.previousbalance);
+                obj.bookingdate = parseInt(obj.bookingdate);
+                obj.artificialId = parseInt(obj.artificialId);
+                obj.id = parseInt(obj.id);
+                obj.bookingdate = parseInt(obj.bookingdate);
+                obj.hash = parseInt(obj.hash);
+            });
+            $scope.bookingitems.merge(values);
+            $scope.currentbalance = $scope.bookingitems.items[$scope.bookingitems.items.length-1].currentbalance;
+            $scope.startingbalance = $scope.bookingitems.items[0].previousbalance;
+            $scope.$apply();
+        }
     };
 
     $scope.import = function (inputfile) {
@@ -52,6 +70,9 @@ function BankListCtrl($scope) {
     $scope.parseBalance = function (balance) {
         if (balance === undefined || balance == null || balance === 0) {
             return 0;
+        }
+        if(Number(balance) === balance) {
+            return balance;
         }
         var balanceWithDot = balance.replace(/\,/, '.');
         return parseFloat(balanceWithDot);

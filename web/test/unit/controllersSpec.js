@@ -122,5 +122,29 @@ describe('controllers', function () {
 
         });
 
+        it('is not parsing anymore if it has already a number', function() {
+            var parseBalance = scope.parseBalance(-123.45);
+            expect(parseBalance).toBe(-123.45);
+        });
+
+        it('can import exported files correctly', function() {
+            var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n'+
+            '0;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;113';
+
+            var event = {target: {result: smallCsvText}};
+            scope.bookingitems = new BookingItems();
+            scope.loadData(event);
+            expect(scope.bookingitems.items.length).toBe(1);
+            expect(scope.bookingitems.items[0].currentbalance).toBe(-123.82);
+            expect(scope.bookingitems.items[0].previousbalance).toBe(-121.35);
+            expect(scope.bookingitems.items[0].bookingdate).toBe(1369000800000);
+            expect(scope.bookingitems.items[0].accountchange).toBe(-2.47);
+            expect(scope.bookingitems.items[0].bookingtext).toBe('BILLA DANKT  1610  K4 18.05.UM 08.21     O');
+
+
+
+
+        });
+
     });
 });

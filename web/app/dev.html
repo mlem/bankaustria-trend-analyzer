@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/ng-csv/build/ng-csv.js"></script>
     <script src="/bower_components/jquery-csv/src/jquery.csv.js"></script>
     <script src="js/BookingItems.js"></script>
     <script src="js/utils.js"></script>
@@ -61,18 +63,21 @@
         <div class="col-md-2">
             <a href="samples/sample.csv" download="sample.csv">example csv file</a>
         </div>
-    </div>
-
-    <div class="row">
 
         <div class="col-md-2">
             <input type="file" onchange="angular.element(this).scope().setFile(this)">
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-2">
             Search: <input type="text" class="form-control" ng-model="query">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" ng-csv="bookingitems.items"
+                    csv-header="['artificialId', 'bookingdate', 'accountchange', 'bookingtext','currentbalance','previousbalance','hash', 'id']"
+                    filename="test.csv">Export</button>
         </div>
     </div>
     <div class="row">

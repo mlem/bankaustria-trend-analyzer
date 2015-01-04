@@ -120,7 +120,7 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[0].bookingtext).toBe('ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
                 'UM 15.34 UHR Kaiser Stra�e PK BANKCARD 4');
 
-        })
+        });
 
     });
 });

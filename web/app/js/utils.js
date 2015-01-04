@@ -42,7 +42,7 @@ function BankAustriaConverter() {
         var date = this.parser.parse(value['Buchungsdatum']);
         var parsedAmount = parseAmount(value);
         var accountChange = parseFloat(parsedAmount);
-        var object = {'bookingdate': date.getTime(), 'accountchange': accountChange, 'bookingtext': value['Buchungstext ']};
+        var object = {'bookingdate': date.getTime(), 'accountchange': parseFloat(accountChange.toFixed(2)), 'bookingtext': value['Buchungstext ']};
         var hash = hashCode(object);
         object.hash = hash;
         return  object;

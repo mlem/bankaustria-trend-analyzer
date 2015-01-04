@@ -4,7 +4,7 @@
 
 function BankListCtrl($scope) {
 
-    $scope.bookingitems = {};
+    $scope.bookingitems = new BookingItems();
 
     $scope.$watch('currentbalance', function (newValue) {
         $scope.calculateFromEnd(newValue);
@@ -76,10 +76,10 @@ function BankListCtrl($scope) {
         var balance = $scope.parseBalance(referenceBalance);
         $scope.currentbalance = balance;
         for (var i = $scope.bookingitems.length - 1; i >= 0; i--) {
-            $scope.bookingitems[i]['currentbalance'] = balance;
-            balance -= $scope.bookingitems[i]['accountchange'];
+            $scope.bookingitems[i].currentbalance = balance;
+            balance -= $scope.bookingitems[i].accountchange;
             balance = parseFloat(balance.toFixed(2));
-            $scope.bookingitems[i]['previousbalance'] = balance;
+            $scope.bookingitems[i].previousbalance = balance;
         }
         $scope.startingbalance = balance;
     }

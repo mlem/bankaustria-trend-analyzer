@@ -8,6 +8,7 @@ module.exports = function (config) {
             'bower_components/angular-charts/dist/angular-charts.js',
             'bower_components/jquery-csv/src/jquery.csv.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'web/app/js/BookingItems.js',
             'web/app/js/utils.js',
             'web/app/js/controllers.js',
             'web/app/js/app.js',

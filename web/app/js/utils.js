@@ -1,31 +1,3 @@
-String.prototype.hashCode = function () {
-    var hash = 0, i, chr, len;
-    if (this.length == 0) return hash;
-    for (i = 0, len = this.length; i < len; i++) {
-        chr = this.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-};
-
-Number.prototype.hashCode = function () {
-    var hash = 0;
-    hash = ((hash << 5) - hash) + this;
-    hash |= 0; // Convert to 32bit integer
-    return hash;
-};
-
-function hashCode(object) {
-    var result = object.bookingdate.hashCode();
-    result = 31 * result + object.accountchange.hashCode();
-    result = 31 * result + object.bookingtext.hashCode();
-    return result;
-};
-
-
-
-
 function BankAustriaConverter() {
     this.parser = new DateParser();
 
@@ -42,9 +14,11 @@ function BankAustriaConverter() {
         var date = this.parser.parse(value['Buchungsdatum']);
         var parsedAmount = parseAmount(value);
         var accountChange = parseFloat(parsedAmount);
-        var object = {'bookingdate': date.getTime(), 'accountchange': parseFloat(accountChange.toFixed(2)), 'bookingtext': value['Buchungstext ']};
-        var hash = hashCode(object);
-        object.hash = hash;
+        var object = new BookingItem();
+        object.bookingdate = date.getTime();
+        object.accountchange = parseFloat(accountChange.toFixed(2));
+        object.bookingtext = value['Buchungstext '];
+        object.hash = object.hashCode();
         return  object;
     }
 
@@ -103,6 +77,7 @@ function CsvReader() {
 
 function Merger() {
     this.merge = function (a, b) {
+        if(a === undefined) return b;
         var result = a.slice(0);
         for (var bKey in b) {
             result[bKey] = b[bKey];

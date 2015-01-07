@@ -37,6 +37,6 @@ bankaustria-trend-analyzer is freely distributable under the terms of the [MIT l
 [travis-image]: https://travis-ci.org/mlem/bankaustria-trend-analyzer.svg?branch=master
 
 [stillmaintained-url]: https://stillmaintained.com/mlem/bankaustria-trend-analyzer
-[stillmaintained-image]: https://stillmaintained.com/mlem/bankaustria-trend-analyzer.png
+[stillmaintained-image]: https://stillmaintained.com/mlem/bankaustria-trend-analyzer.svg
 
 

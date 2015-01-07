@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function BankListCtrl($scope) {
+function BankListController($scope) {
 
     $scope.bookingitems = new BookingItems();
 
@@ -118,5 +118,5 @@ function BankListCtrl($scope) {
 }
 
 
-BankListCtrl.$inject = ['$scope'];
+BankListController.$inject = ['$scope'];
 

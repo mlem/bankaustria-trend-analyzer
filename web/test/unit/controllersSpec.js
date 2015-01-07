@@ -4,17 +4,17 @@
 
 describe('controllers', function () {
 
-    describe('BankListCtrl', function () {
+    describe('BankListController', function () {
 
         var scope;
         var controller;
 
-        beforeEach(module('bankaustria-trend-analyzer'));
+        beforeEach(module('bankaustriaTrendAnalyzer'));
 
         beforeEach(inject(function ($rootScope, $controller) {
 
             scope = $rootScope.$new();
-            controller = $controller(BankListCtrl, {$scope: scope});
+            controller = $controller(BankListController, {$scope: scope});
 
             scope.bookingitems.items = [
                 {'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'},

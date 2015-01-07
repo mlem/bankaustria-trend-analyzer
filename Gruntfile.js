@@ -93,6 +93,14 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+            build: {
+                files: [{
+                    dot: false,
+                    src: [
+                        'build/'
+                    ]
+                }]
+            },
             server: '.tmp'
         },
 
@@ -101,14 +109,12 @@ module.exports = function (grunt) {
             dist: {
                 files: [
                     {
+                        flatten: true,
                         expand: true,
                         dot: true,
-                        cwd: '.',
+                        cwd: 'build',
                         dest: 'dist',
-                        src: [
-                            'example/**',
-                            'build/**'
-                        ]
+                        src: '*.js'
                     }
                 ]
             }
@@ -124,7 +130,7 @@ module.exports = function (grunt) {
             },
             pages: {
                 options: {
-                    remote: 'git@github.com:asafdav/ng-csv.git',
+                    remote: 'git@github.com:mlem/bankaustria-trend-analyzer.git',
                     branch: 'gh-pages'
                 }
             }

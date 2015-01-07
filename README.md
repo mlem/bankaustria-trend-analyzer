@@ -3,7 +3,7 @@ Bank Austria CSV Trend Analyzer
 
 An Open Source Project to display your account changes.
 
-[![MIT License][license-image]][license-url] [![Build Status][travis-image]][travis-url] [![Project Status]][stillmaintained-url]
+[![MIT License][license-image]][license-url] [![Build Status][travis-image]][travis-url] [![Project Status][stillmaintained-image]][stillmaintained-url]
 
 ## TODO
 
@@ -11,6 +11,19 @@ An Open Source Project to display your account changes.
 * Import and _MERGE_ files *done*
 * Encrypt file and make it password safe *dropped*
 * show graphs with angular-charts *in progress*
+
+### Prerequisites:
+
+1. Install [Git](http://git-scm.com/)
+1. Open commandprompt and clone this repo `git clone https://github.com/mlem/bankaustria-trend-analyzer.git`
+1. Install [Node.js](http://nodejs.org/)
+
+
+### How to run this:
+
+1. Open commandprompt and navigate to this folder
+1. run `npm install`
+1. run `grunt server`
 
 
 ## License

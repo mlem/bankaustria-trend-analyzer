@@ -1,3 +1,7 @@
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+
 module.exports = function (grunt) {
     // * Read command-line switches
     // - Read in --browsers CLI option; split it on commas into an array if it's a string, otherwise ignore it
@@ -78,6 +82,28 @@ module.exports = function (grunt) {
             tasks: ['default']
         },
 
+        connect: {
+            options: {
+                port: 9000,
+                // Change this to '0.0.0.0' to access the server from outside.
+                hostname: 'localhost'
+            },
+            livereload: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            mountFolder(connect, '.')
+                        ];
+                    }
+                }
+            }
+        },
+        open: {
+            server: {
+                url: 'http://localhost:<%= connect.options.port %>/web/app/dev.html'
+            }
+        },
+
         // Empties folders to start fresh
         clean: {
             dist: {
@@ -140,11 +166,21 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-build-control');
 
+    grunt.registerTask('server', function (target) {
+        grunt.task.run([
+            'clean:server',
+            'connect:livereload',
+            'open',
+            'livereload'
+        ]);
+    });
     grunt.registerTask('test', ['jshint', 'karma:unit']);
     grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
     grunt.registerTask('livereload', ['default', 'watch']);

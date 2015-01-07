@@ -19,14 +19,11 @@ module.exports = function (grunt) {
             },
             library: {
                 src: [
-                    'web/app/components/account-calculations/*.js',
-                    'web/app/components/csv-parse/*.js',
-                    'web/app/components/file-import/*.js',
-                    'web/app/display-data/*.js',
-                    'web/app/mainpage/*.js',
+                    'web/app/**/*.js',
                     'web/app/app.js',
                     'web/app/app-controller.js',
-                    'web/app/app.suffix'
+                    'web/app/app.suffix',
+                    '!**/*test.js'
                 ],
                 dest: 'build/<%= library.name %>.js'
             }

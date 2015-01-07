@@ -1,6 +1,6 @@
 module.exports = function (config) {
     config.set({
-        basePath: '../../',
+        basePath: '.',
 
         files: [
             'bower_components/jquery/dist/jquery.js',
@@ -22,10 +22,10 @@ module.exports = function (config) {
 
         autoWatch: true,
 
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
         junitReporter: {
-            outputFile: 'test_out/unit.xml',
+            outputFile: 'build/test_out/unit.xml',
             suite: 'unit'
         }
     });

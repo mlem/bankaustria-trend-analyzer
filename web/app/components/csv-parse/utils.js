@@ -4,8 +4,7 @@ function BankAustriaConverter() {
     function parseAmount(value) {
         var amount = value.Betrag;
         var amountWithoutThousand = amount.replace(/\./, '');
-        var parsedAmount = amountWithoutThousand.replace(/\,/, '.');
-        return parsedAmount;
+        return amountWithoutThousand.replace(/\,/, '.');
     }
 
 
@@ -46,10 +45,10 @@ function DateParser() {
 
     this.parse = function (dateString) {
         var parts = splitDateString(dateString);
-        var year = parseInt(parts[2], 10);
-        var month = parseInt(parts[1], 10) - 1;
-        var days = parseInt(parts[0], 10);
-        return new Date(year, month, days);
+        var year = parts[2];
+        var month = parts[1] - 1;
+        var days = parts[0];
+        return new Date(Date.UTC(year, month, days));
     };
 }
 

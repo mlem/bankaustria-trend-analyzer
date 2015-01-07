@@ -1,4 +1,4 @@
-BookingItem = function () {
+var BookingItem = function () {
     this.artificialId = 0;
     this.bookingdate = 0;
     this.accountchange = 0.0;
@@ -6,11 +6,11 @@ BookingItem = function () {
     this.currentbalance = 0.0;
     this.previousbalance = 0.0;
     this.hash = 0;
-}
+};
 
 String.prototype.hashCode = function () {
     var hash = 0, i, chr, len;
-    if (this.length == 0) return hash;
+    if (this.length === 0) return hash;
     for (i = 0, len = this.length; i < len; i++) {
         chr = this.charCodeAt(i);
         hash = ((hash << 5) - hash) + chr;
@@ -34,7 +34,7 @@ BookingItem.prototype.hashCode = function () {
 };
 
 
-BookingItems = function () {
+var BookingItems = function () {
     this.items = [];
 };
 
@@ -73,7 +73,7 @@ BookingItems.prototype.resetArtificialIds = function () {
     for (var i = 0; i < this.items.length; i++) {
         this.items[i].artificialId = i;
     }
-}
+};
 BookingItems.prototype.itemExists = function (hashes, item) {
     for (var hashKey in hashes) {
         if (hashes[hashKey] === item.hash) {

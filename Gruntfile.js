@@ -9,6 +9,12 @@ module.exports = function (grunt) {
 
         concat: {
             options: {
+                // Replace all 'use strict' statements in the code with a single one at the top
+                banner: "(function(window, document) {\n'use strict';\n",
+                process: function(src, filepath) {
+                    return '// Source: ' + filepath + '\n' +
+                        src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                },
                 separator: ''
             },
             library: {
@@ -19,7 +25,8 @@ module.exports = function (grunt) {
                     'web/app/display-data/*.js',
                     'web/app/mainpage/*.js',
                     'web/app/app.js',
-                    'web/app/app-controller.js'
+                    'web/app/app-controller.js',
+                    'web/app/app.suffix'
                 ],
                 dest: 'build/<%= library.name %>.js'
             }
@@ -69,7 +76,7 @@ module.exports = function (grunt) {
             },
             files: [
                 'Gruntfile.js',
-                'src/**/*'
+                'web/**/*'
             ],
             tasks: ['default']
         },

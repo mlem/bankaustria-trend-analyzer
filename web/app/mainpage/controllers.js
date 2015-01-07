@@ -18,7 +18,7 @@ function BankListController($scope) {
     $scope.displayType = "number:2";
 
     $scope.setFile = function (element) {
-        $scope.import(element.files[0])
+        $scope.import(element.files[0]);
         $scope.$apply();
     };
 
@@ -40,18 +40,18 @@ function BankListController($scope) {
         if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
             var reader = new CsvReader();
             var values = reader.asObjects(textFromFile);
-            values.every(function(obj) {
-                obj.accountchange =  $scope.parseBalance(obj.accountchange);
+            values.every(function (obj) {
+                obj.accountchange = $scope.parseBalance(obj.accountchange);
                 obj.currentbalance = $scope.parseBalance(obj.currentbalance);
                 obj.previousbalance = $scope.parseBalance(obj.previousbalance);
-                obj.bookingdate = parseInt(obj.bookingdate);
-                obj.artificialId = parseInt(obj.artificialId);
-                obj.id = parseInt(obj.id);
-                obj.bookingdate = parseInt(obj.bookingdate);
-                obj.hash = parseInt(obj.hash);
+                obj.bookingdate = parseInt(obj.bookingdate, 10);
+                obj.artificialId = parseInt(obj.artificialId, 10);
+                obj.id = parseInt(obj.id, 10);
+                obj.bookingdate = parseInt(obj.bookingdate, 10);
+                obj.hash = parseInt(obj.hash, 10);
             });
             $scope.bookingitems.merge(values);
-            $scope.currentbalance = $scope.bookingitems.items[$scope.bookingitems.items.length-1].currentbalance;
+            $scope.currentbalance = $scope.bookingitems.items[$scope.bookingitems.items.length - 1].currentbalance;
             $scope.startingbalance = $scope.bookingitems.items[0].previousbalance;
             $scope.$apply();
         }
@@ -62,27 +62,27 @@ function BankListController($scope) {
         var reader = new FileReader();
         reader.readAsText(inputfile);
         reader.onload = $scope.loadData;
-        reader.onerror = function () {
+        reader.onerror = function (file) {
             alert('Unable to read ' + file.fileName);
         };
     };
 
     $scope.parseBalance = function (balance) {
-        if (balance === undefined || balance == null || balance === 0) {
+        if (balance === undefined || balance === null || balance === 0) {
             return 0;
         }
-        if(Number(balance) === balance) {
+        if (Number(balance) === balance) {
             return balance;
         }
         var balanceWithDot = balance.replace(/\,/, '.');
         return parseFloat(balanceWithDot);
-    }
+    };
 
     $scope.containsValidSpecialCharacters = function (referenceBalance) {
         if (referenceBalance === 0 || Number(referenceBalance) === referenceBalance) {
             return false;
         }
-        if (typeof referenceBalance === 'undefined' || referenceBalance.length == 0)
+        if (typeof referenceBalance === 'undefined' || referenceBalance.length === 0)
             return true;
         if (referenceBalance == '-')
             return true;
@@ -90,7 +90,7 @@ function BankListController($scope) {
         if (lastChar.match(/\.|,/))
             return true;
         return false;
-    }
+    };
 
     $scope.calculateFromEnd = function (referenceBalance) {
         if ($scope.containsValidSpecialCharacters(referenceBalance)) return;
@@ -103,18 +103,18 @@ function BankListController($scope) {
             $scope.bookingitems.items[i].previousbalance = balance;
         }
         $scope.startingbalance = balance;
-    }
+    };
 
     $scope.getColor = function (value) {
-        if (value == 0) {
+        if (value === 0) {
             return '';
         }
-        return value > 0 ? 'green' : 'red'
-    }
+        return value > 0 ? 'green' : 'red';
+    };
 
     $scope.getColorBalance = function (value) {
-        return value >= 0 ? '' : 'red'
-    }
+        return value >= 0 ? '' : 'red';
+    };
 }
 
 

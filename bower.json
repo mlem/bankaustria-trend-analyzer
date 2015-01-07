@@ -1,10 +1,10 @@
 {
-    "name": "bank",
+    "name": "bankaustria-trend-analyzer",
     "version": "0.0.0",
     "authors": [
         "Martin Lemanski <martin.lemanski@gmx.at>"
     ],
-    "main": "web\\app\\js\\app.js",
+    "main": "build\\bankaustria-trend-analyzer.js",
     "license": "MIT",
     "private": true,
     "ignore": [

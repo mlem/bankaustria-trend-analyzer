@@ -16,89 +16,9 @@
     <script src="app.js"></script>
 </head>
 <body>
-<div class="container" ng-controller="BankListController">
 
-    <h1 class="text-center">Bank Austria Table
-        <small><a href="https://github.com/mlem/bankaustria-trend-analyzer">git:bankaustria-trend-analyzer</a></small>
-    </h1>
-
-    <div class="row">
-        <div class="col-md-12">
-            Laden Sie das Example.csv file herunter.
-            Verwenden Sie den Button unten um das File zu impotieren.
-            Tippen Sie, nach dem laden der csv Datei, eine Zahl in eines der beiden Felder ein.
-        </div>
-    </div>
-
-    <div class="row form-group">
-
-        <div class="col-md-3">
-
-            Kontostand zu Beginn: {{startingbalance}}
-        </div>
-    </div>
-
-    <div class="row form-group">
-
-        <div class="col-md-3">
-            Kontostand jetzt: <input class="form-control" type="text" ng-model="currentbalance" placeholder="0"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            sortierung nach Datum:
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-3">
-            absteigend <input type="radio" ng-model="orderProp" value="-artificialId">
-        </div>
-        <div class="col-md-3">
-            aufsteigend <input type="radio" ng-model="orderProp" value="artificialId">
-        </div>
-    </div>
-    <div class="row">
-
-        <div class="col-md-2">
-            <a href="samples/sample.csv" download="sample.csv">example csv file</a>
-        </div>
-
-        <div class="col-md-2">
-            <input type="file" onchange="angular.element(this).scope().setFile(this)">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            Search: <input type="text" class="form-control" ng-model="query">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            <button type="button" ng-csv="bookingitems.items"
-                    csv-header="['artificialId', 'bookingdate', 'accountchange', 'bookingtext','currentbalance','previousbalance','hash', 'id']"
-                    filename="test.csv" field-separator=";">Export</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">Datum</div>
-        <div class="col-md-4">Buchungstext</div>
-        <div class="col-md-2">alter Kontostand</div>
-        <div class="col-md-2">Buchungsbetrag</div>
-        <div class="col-md-2">neuer Kontostand</div>
-    </div>
-    <div class="row" ng-repeat="item in bookingitems.items | filter:query | orderBy: orderProp">
-        <div class="col-md-1">{{item['bookingdate'] | date:'dd.MM.yyyy'}}</div>
-        <div class="col-md-4">{{item['bookingtext'] | limitTo:30}}</div>
-        <div class="col-md-2 text-right {{getColorBalance(item['previousbalance'])}}">{{item['previousbalance'] |
-            number:2 }}
-        </div>
-        <div class="col-md-2 text-right {{getColor(item['accountchange'])}}">{{item['accountchange'] | number:2 }}</div>
-        <div class="col-md-2 text-right {{getColorBalance(item['currentbalance'])}}">{{item['currentbalance'] | number:2
-            }}
-        </div>
-    </div>
-</div>
+<ng-include src="'app.html'">
+</ng-include>
 
 </body>
 </html>

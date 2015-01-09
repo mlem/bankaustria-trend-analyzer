@@ -1,6 +1,15 @@
 language: node_js
 node_js:
-  - 0.10
+- 0.1
 before_script:
-  - npm install -g grunt-cli bower
-  - bower install
+- npm install -g grunt-cli bower
+- bower install
+env:
+  global:
+  - secure: Oyhe1lLNVI95f1gUgBlS+VP8o+FOoaYdt5sPx+ZJV8ot1eh09QpxYa3g4XdTpQ8+cAqwHDVLeuu0dRGCzA1SF4ZkZj9O6R64nEC4P9MgnNPlbi5ryTRWHfwY4pb83gwPrLpFu4cZYKVAHa/lj8JsFiVYU/r+m23ByH5Yp6oscXw=
+  - secure: bYgjxD+Jhlgb/TgJdDKGgYWM6oFuzRDcYt6hHmUl1Up0cKzkirnSrqUxZC61SwH+DP4313k+kLbmL6S7QzD94xrP4af8KfWfNEm0JS3gmsVDNEiPGV4vIQiYbCS+/cMMahTQZdQtq6unNndMPjs4peLJ3m+Ml5pSWjdSWiSiYyk=
+after_success:
+  -  "curl --ftp-create-dirs -T ./web/app/app.css -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/app.css"
+  -  "curl --ftp-create-dirs -T ./web/app/app.html -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/app.html"
+  -  "curl --ftp-create-dirs -T ./web/app/index.html -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/index.html"
+  -  "curl --ftp-create-dirs -T ./dist/bankaustria-trend-analyzer.min.js -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/bankaustria-trend-analyzer.min.js"

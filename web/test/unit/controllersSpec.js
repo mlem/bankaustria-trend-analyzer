@@ -185,5 +185,14 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[2].accountchange).toBe(-1);
         });
 
+        it('can import multiple files', function() {
+            var fileList = [{a:1}, {b:2}];
+            var callCount = 0;
+            scope.import = function() {callCount++};
+            scope.setFile({files: fileList});
+
+            expect(callCount).toBe(2);
+        })
+
     });
 });

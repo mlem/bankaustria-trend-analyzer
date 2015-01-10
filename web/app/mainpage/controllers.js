@@ -18,7 +18,9 @@ function BankListController($scope) {
     $scope.displayType = "number:2";
 
     $scope.setFile = function (element) {
-        $scope.import(element.files[0]);
+        for (var i = 0; element.files.length > i; i++) {
+            $scope.import(element.files[i]);
+        }
         $scope.$apply();
     };
 
@@ -40,7 +42,7 @@ function BankListController($scope) {
         if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
             var reader = new CsvReader();
             var values = reader.asObjects(textFromFile);
-            for(var key in values) {
+            for (var key in values) {
                 var obj = values[key];
                 obj.accountchange = $scope.parseBalance(obj.accountchange);
                 obj.currentbalance = $scope.parseBalance(obj.currentbalance);

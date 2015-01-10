@@ -23,6 +23,8 @@ An Open Source Project to display your account changes.
 
 1. Open commandprompt and navigate to this folder
 1. run `npm install`
+1. run `npm install -g grunt-cli`
+1. run `bower install`
 1. run `grunt server`
 
 

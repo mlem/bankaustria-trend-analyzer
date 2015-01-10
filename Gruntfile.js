@@ -67,7 +67,12 @@ module.exports = function (grunt) {
             unit: {
                 options: {
                     configFile: 'karma.conf.js',
-                    singleRun: true
+                    singleRun: true,
+                    plugins:[
+                        'karma-jasmine',
+                        'karma-coverage',
+                        'karma-phantomjs-launcher'
+                    ]
                 }
             }
         },

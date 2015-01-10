@@ -28,6 +28,45 @@ describe('Convert', function () {
             expect(result.bookingtext).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
         });
 
+
+        it('can convert accountchange with comma correctly', function () {
+            var result = converter.convert(
+                {   'Buchungsdatum': '21/02/2013',
+                    'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                    'Betrag': '-2,73'
+                });
+            expect(result.accountchange).toBe(-2.73);
+        });
+
+
+        it('can convert accountchange with comma and thousand-dot correctly', function () {
+            var result = converter.convert(
+                {   'Buchungsdatum': '21/02/2013',
+                    'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                    'Betrag': '-2.000,73'
+                });
+            expect(result.accountchange).toBe(-2000.73);
+        });
+
+
+        it('can convert accountchange with dot correctly', function () {
+            var result = converter.convert(
+                {   'Buchungsdatum': '21/02/2013',
+                    'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                    'Betrag': '-2.73'
+                });
+            expect(result.accountchange).toBe(-2.73);
+        });
+
+        it('can convert accountchange with dot and thousand-comma correctly', function () {
+            var result = converter.convert(
+                {   'Buchungsdatum': '21/02/2013',
+                    'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
+                    'Betrag': '-2,000.73'
+                });
+            expect(result.accountchange).toBe(-2000.73);
+        });
+
         it('can calculate correct hashcode for numbers', function() {
 
             var result = converter.convert(

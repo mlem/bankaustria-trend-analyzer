@@ -32,7 +32,7 @@ An Open Source Project to display your account changes.
 
 bankaustria-trend-analyzer is freely distributable under the terms of the [MIT license](https://github.com/mlem/bankaustria-trend-analyzer/blob/master/LICENSE).
 
-[![Project Status]This project is still maintained][stillmaintained-url]
+[This Project is under active development.][stillmaintained-url]
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE

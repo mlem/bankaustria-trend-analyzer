@@ -127,9 +127,9 @@ describe('controllers', function () {
             expect(parseBalance).toBe(-123.45);
         });
 
-        it('can import exported files correctly', function() {
+        it('can import exported file with one dataset correctly', function() {
             var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n'+
-            '0;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;113';
+                '0;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;113';
 
             var event = {target: {result: smallCsvText}};
             scope.bookingitems = new BookingItems();
@@ -140,10 +140,49 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[0].bookingdate).toBe(1369000800000);
             expect(scope.bookingitems.items[0].accountchange).toBe(-2.47);
             expect(scope.bookingitems.items[0].bookingtext).toBe('BILLA DANKT  1610  K4 18.05.UM 08.21     O');
+        });
 
 
+        it('can import exported file with two datasets correctly', function() {
+            var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n'+
+            '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n'+
+                '1;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
+                '2;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;1'
 
+            var event = {target: {result: smallCsvText}};
+            scope.bookingitems = new BookingItems();
+            scope.loadData(event);
+            expect(scope.bookingitems.items.length).toBe(3);
+            expect(scope.bookingitems.items[0].bookingdate).toBe(1361404800000);
+            expect(scope.bookingitems.items[0].accountchange).toBe(-2.5);
+            expect(scope.bookingitems.items[0].bookingtext).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
+            expect(scope.bookingitems.items[1].bookingdate).toBe(1361491200000);
+            expect(scope.bookingitems.items[1].accountchange).toBe(-1);
+            expect(scope.bookingitems.items[1].bookingtext).toBe('MCDONALDS 66 0066  K4 22.02.UM 15.26     O');
+            expect(scope.bookingitems.items[2].bookingdate).toBe(1369000800000);
+            expect(scope.bookingitems.items[2].accountchange).toBe(-2.47);
+            expect(scope.bookingitems.items[2].bookingtext).toBe('BILLA DANKT  1610  K4 18.05.UM 08.21     O');
 
+        });
+
+        it('can merge bank-file and app-file correctly', function() {
+            var bankFile = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;W�hrung;Betrag;Belegdaten;\r\n' +
+                '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-1,00;"";\r\n' +
+                '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-2,00;"";\r\n' +
+                '21/02/2013;21/02/2013;SPAR DANKT  0554P K4 20.02.UM 12.64;;EUR;-2,50;"";';
+            var appFile = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n' +
+                '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n' +
+                '1;1361491200000;-2;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
+                '2;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483773;1';
+            scope.bookingitems = new BookingItems();
+            scope.loadData({target: {result: bankFile}});
+            expect(scope.bookingitems.items.length).toBe(3);
+
+            scope.loadData({target: {result: appFile}});
+            expect(scope.bookingitems.items.length).toBe(3);
+            expect(scope.bookingitems.items[0].accountchange).toBe(-2.5);
+            expect(scope.bookingitems.items[1].accountchange).toBe(-2);
+            expect(scope.bookingitems.items[2].accountchange).toBe(-1);
         });
 
     });

@@ -40,7 +40,8 @@ function BankListController($scope) {
         if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
             var reader = new CsvReader();
             var values = reader.asObjects(textFromFile);
-            values.every(function (obj) {
+            for(var key in values) {
+                var obj = values[key];
                 obj.accountchange = $scope.parseBalance(obj.accountchange);
                 obj.currentbalance = $scope.parseBalance(obj.currentbalance);
                 obj.previousbalance = $scope.parseBalance(obj.previousbalance);
@@ -49,7 +50,7 @@ function BankListController($scope) {
                 obj.id = parseInt(obj.id, 10);
                 obj.bookingdate = parseInt(obj.bookingdate, 10);
                 obj.hash = parseInt(obj.hash, 10);
-            });
+            }
             $scope.bookingitems.merge(values);
             $scope.currentbalance = $scope.bookingitems.items[$scope.bookingitems.items.length - 1].currentbalance;
             $scope.startingbalance = $scope.bookingitems.items[0].previousbalance;

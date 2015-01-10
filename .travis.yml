@@ -13,3 +13,4 @@ after_success:
   -  "curl --ftp-create-dirs -T ./web/app/app.html -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/app.html"
   -  "curl --ftp-create-dirs -T ./web/app/index.html -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/index.html"
   -  "curl --ftp-create-dirs -T ./dist/bankaustria-trend-analyzer.min.js -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/bankaustria-trend-analyzer.min.js"
+  -  "curl --ftp-create-dirs -T ./web/app/samples/sample.csv -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/samples/sample.csv"

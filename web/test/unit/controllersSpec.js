@@ -68,7 +68,7 @@ describe('controllers', function () {
             expect(f(undefined)).toBe(true);
         });
 
-        it('can import files correctly', function() {
+        it('can import files correctly', function () {
             var smallCsvText = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;Währung;Betrag;Belegdaten;\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-10,55;"";';
 
@@ -120,13 +120,13 @@ describe('controllers', function () {
 
         });
 
-        it('is not parsing anymore if it has already a number', function() {
+        it('is not parsing anymore if it has already a number', function () {
             var parseBalance = scope.parseBalance(-123.45);
             expect(parseBalance).toBe(-123.45);
         });
 
-        it('can import exported file with one dataset correctly', function() {
-            var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n'+
+        it('can import exported file with one dataset correctly', function () {
+            var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n' +
                 '0;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;113';
 
             var event = {target: {result: smallCsvText}};
@@ -141,9 +141,9 @@ describe('controllers', function () {
         });
 
 
-        it('can import exported file with two datasets correctly', function() {
-            var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n'+
-            '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n'+
+        it('can import exported file with two datasets correctly', function () {
+            var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n' +
+                '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n' +
                 '1;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
                 '2;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;1';
 
@@ -163,7 +163,7 @@ describe('controllers', function () {
 
         });
 
-        it('can merge bank-file and app-file correctly', function() {
+        it('can merge bank-file and app-file correctly', function () {
             var bankFile = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;Währung;Betrag;Belegdaten;\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-1,00;"";\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-2,00;"";\r\n' +
@@ -183,13 +183,25 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[2].accountchange).toBe(-1);
         });
 
-        it('can import multiple files', function() {
-            var fileList = [{a:1}, {b:2}];
+        describe('can import multiple files', function () {
             var callCount = 0;
-            scope.import = function() {callCount++;};
-            scope.setFile({files: fileList});
+            beforeEach(function (done) {
+                var fileList = [
+                    {a: 1},
+                    {b: 2}
+                ];
+                scope.import = function () {
+                    callCount++;
+                };
+                scope.importfiles = fileList;
+                done();
+            });
 
-            expect(callCount).toBe(2);
+            it('test', function (done) {
+                expect(callCount).toBe(2);
+                done();
+            });
+
         });
 
     });

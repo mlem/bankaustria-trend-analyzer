@@ -21,10 +21,12 @@ function BankAustriaConverter() {
     this.convertAll = function (data) {
         var values = [];
         for (var key in data) {
-            var item = this.convert(data[key]);
-            values.push(item);
-            item.artificialId = values.length;
-            item.id = values.length;
+            if (data.hasOwnProperty(key)) {
+                var item = this.convert(data[key]);
+                values.push(item);
+                item.artificialId = values.length;
+                item.id = values.length;
+            }
         }
         return values;
     };

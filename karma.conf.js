@@ -10,6 +10,7 @@ module.exports = function (config) {
             'bower_components/angular-charts/dist/angular-charts.js',
             'bower_components/jquery-csv/src/jquery.csv.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'web/app/components/**/*module.js',
             'web/app/components/**/*.js',
             'web/app/display-data/*.js',
             'web/app/mainpage/*.js',

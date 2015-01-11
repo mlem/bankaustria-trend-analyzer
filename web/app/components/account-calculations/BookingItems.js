@@ -10,11 +10,14 @@ var BookingItem = function () {
 
 String.prototype.hashCode = function () {
     var hash = 0, i, chr, len;
-    if (this.length === 0) return hash;
+    if (this.length === 0) {
+        return hash;
+    }
     for (i = 0, len = this.length; i < len; i++) {
         chr = this.charCodeAt(i);
         hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
+        // Convert to 32bit integer
+        hash |= 0;
     }
     return hash;
 };
@@ -22,7 +25,8 @@ String.prototype.hashCode = function () {
 Number.prototype.hashCode = function () {
     var hash = 0;
     hash = ((hash << 5) - hash) + this;
-    hash |= 0; // Convert to 32bit integer
+    // Convert to 32bit integer
+    hash |= 0;
     return hash;
 };
 
@@ -93,8 +97,8 @@ BookingItems.prototype.merge = function (arrayToMerge) {
     var hashes = this.items.map(function (item) {
         return item.hash;
     });
-    for (var itemKey in arrayToMerge) {
-        var item = arrayToMerge[itemKey];
+    for (var i = 0; i < arrayToMerge.length; i++) {
+        var item = arrayToMerge[i];
         if (!this.itemExists(hashes, item)) {
             this.addItem(item);
         }

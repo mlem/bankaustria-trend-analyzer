@@ -47,12 +47,13 @@
     "grunt-usemin": "^0.1.13",
     "matchdep": "^0.1.2",
     "karma": "^0.12.16",
-    "karma-jasmine": "^0.2.2",
+    "karma-jasmine": "~0.3.4",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-coverage": "~0.2.7",
     "karma-junit-reporter": "~0.2.2",
     "codeclimate-test-reporter": "0.0.4",
-    "grunt-sonar-runner": "~2.4.1"
+    "grunt-sonar-runner": "~2.4.1",
+    "jasmine-core": "~2.1.3"
   },
   "engines": {
     "node": ">=0.8.0"

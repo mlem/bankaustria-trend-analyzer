@@ -5,7 +5,7 @@ var mountFolder = function (connect, dir) {
 module.exports = function (grunt) {
     // * Read command-line switches
     // - Read in --browsers CLI option; split it on commas into an array if it's a string, otherwise ignore it
-    var browsers = typeof grunt.option('browsers') == 'string' ? grunt.option('browsers').split(',') : undefined;
+    var browsers = typeof grunt.option('browsers') === 'string' ? grunt.option('browsers').split(',') : undefined;
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 // Replace all 'use strict' statements in the code with a single one at the top
-                banner: "(function(window, document) {\n'use strict';\n",
+                banner: "(function() {\n'use strict';\n",
                 process: function(src, filepath) {
                     return '// Source: ' + filepath + '\n' +
                         src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
@@ -23,6 +23,8 @@ module.exports = function (grunt) {
             },
             library: {
                 src: [
+                    'web/app/components/**/*module.js',
+                    'web/app/components/**/*.js',
                     'web/app/**/*.js',
                     'web/app/app.js',
                     'web/app/app-controller.js',
@@ -49,12 +51,17 @@ module.exports = function (grunt) {
             afterConcat: {
                 src: [
                     '<%= concat.library.dest %>'
-                ]
+                ],
+                options: {
+                    undef: true,
+                    unused: true
+                }
             },
             options: {
                 // options here to override JSHint defaults
                 globals: {
                     jQuery: true,
+                    $: true,
                     console: true,
                     module: true,
                     document: true,
@@ -65,9 +72,14 @@ module.exports = function (grunt) {
                     it: false,
                     expect: false,
                     toBe: false,
+                    FileReader: false,
                     spyOn: false,
                     window: false
                 },
+                curly: true,
+                eqeqeq: true,
+                forin: true,
+                funcscope: true,
                 globalstrict: false,
                 force: true
             }
@@ -98,7 +110,7 @@ module.exports = function (grunt) {
 
         connect: {
             options: {
-                port: 9009,
+                port: 8009,
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost'
             },

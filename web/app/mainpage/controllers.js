@@ -9,6 +9,7 @@ function BankListController($scope) {
         $scope.calculateFromEnd(newValue);
     });
 
+
     $scope.currentbalance = 0;
     $scope.startingbalance = 0;
 
@@ -16,12 +17,13 @@ function BankListController($scope) {
 
     $scope.displayType = "number:2";
 
-    $scope.setFile = function (element) {
-        for (var i = 0; element.files.length > i; i++) {
-            $scope.import(element.files[i]);
+    $scope.importfiles = [];
+
+    $scope.$watch('importfiles', function (importfiles) {
+        for (var i = 0; importfiles.length > i; i++) {
+            $scope.import(importfiles[i]);
         }
-        $scope.$apply();
-    };
+    });
 
     function convertFileToData(textFromFile) {
         var reader = new CsvReader();
@@ -41,8 +43,8 @@ function BankListController($scope) {
         if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
             var reader = new CsvReader();
             var values = reader.asObjects(textFromFile);
-            for (var key in values) {
-                var obj = values[key];
+            for (var i = 0; i < values.length; i++) {
+                var obj = values[i];
                 obj.accountchange = $scope.parseBalance(obj.accountchange);
                 obj.currentbalance = $scope.parseBalance(obj.currentbalance);
                 obj.previousbalance = $scope.parseBalance(obj.previousbalance);
@@ -60,7 +62,6 @@ function BankListController($scope) {
     };
 
     $scope.import = function (inputfile) {
-        console.log(inputfile.name);
         var reader = new FileReader();
         reader.readAsText(inputfile, 'ISO-8859-1');
         reader.onload = $scope.loadData;
@@ -84,18 +85,21 @@ function BankListController($scope) {
         if (referenceBalance === 0 || Number(referenceBalance) === referenceBalance) {
             return false;
         }
-        if (typeof referenceBalance === 'undefined' || referenceBalance.length === 0)
+        if (typeof referenceBalance === 'undefined' || referenceBalance.length === 0) {
             return true;
-        if (referenceBalance == '-')
+        }
+        if (referenceBalance === '-') {
             return true;
+        }
         var lastChar = referenceBalance[referenceBalance.length - 1];
-        if (lastChar.match(/\.|,/))
-            return true;
-        return false;
+        return !!lastChar.match(/\.|,/);
+
     };
 
     $scope.calculateFromEnd = function (referenceBalance) {
-        if ($scope.containsValidSpecialCharacters(referenceBalance)) return;
+        if ($scope.containsValidSpecialCharacters(referenceBalance)) {
+            return;
+        }
         var balance = $scope.parseBalance(referenceBalance);
         $scope.currentbalance = balance;
         for (var i = $scope.bookingitems.items.length - 1; i >= 0; i--) {

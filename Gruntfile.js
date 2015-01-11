@@ -44,7 +44,7 @@ module.exports = function (grunt) {
         },
         jshint: {
             beforeConcat: {
-                src: ['gruntfile.js', '<%= library.name %>/**/*.js']
+                src: ['gruntfile.js', 'web/**/*.js']
             },
             afterConcat: {
                 src: [
@@ -58,9 +58,18 @@ module.exports = function (grunt) {
                     console: true,
                     module: true,
                     document: true,
-                    angular: true
+                    alert: true,
+                    angular: true,
+                    describe: false,
+                    beforeEach: false,
+                    it: false,
+                    expect: false,
+                    toBe: false,
+                    spyOn: false,
+                    window: false
                 },
-                globalstrict: false
+                globalstrict: false,
+                force: true
             }
         },
         karma: {
@@ -89,7 +98,7 @@ module.exports = function (grunt) {
 
         connect: {
             options: {
-                port: 9000,
+                port: 9009,
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost'
             },
@@ -148,6 +157,33 @@ module.exports = function (grunt) {
             }
         },
 
+        sonarRunner: {
+            analysis: {
+                options: {
+                    debug: true,
+                    separator: '\n',
+                    dryRun: false,
+                    sonar: {
+                        host: {
+                            url: 'http://localhost:9000'
+                        },
+                        jdbc: {
+                            url: 'jdbc:postgresql://localhost/sonar',
+                            username: 'sonar',
+                            password: 'sonar'
+                        },
+
+                        projectKey: '<%= library.name %>',
+                        projectName: '<%= library.name %>',
+                        projectVersion: '<%= library.version %>',
+                        sources: ['web/app'].join(','),
+                        language: 'js',
+                        sourceEncoding: 'UTF-8'
+                    }
+                }
+            }
+        },
+
         // Deploy
         buildcontrol: {
             options: {
@@ -176,6 +212,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-sonar-runner');
     grunt.loadNpmTasks('grunt-build-control');
 
     grunt.registerTask('server', function (target) {
@@ -190,5 +227,6 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
     grunt.registerTask('livereload', ['default', 'watch']);
     grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'buildcontrol:pages']);
+    grunt.registerTask('sonar', ['clean', 'karma:unit', 'sonarRunner:analysis']);
 
 };

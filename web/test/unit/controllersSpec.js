@@ -1,5 +1,3 @@
-'use strict';
-
 /* jasmine specs for controllers go here */
 
 describe('controllers', function () {
@@ -24,7 +22,7 @@ describe('controllers', function () {
 
         it('shows a list of account changes', function () {
             expect(scope.bookingitems.items.length).toBe(2);
-            expect(scope.bookingitems.items[0]['accountchange']).toBe(-2.73);
+            expect(scope.bookingitems.items[0].accountchange).toBe(-2.73);
 
             expect(scope.currentbalance).toBe(0);
             expect(scope.startingbalance).toBe(0);
@@ -34,10 +32,10 @@ describe('controllers', function () {
             scope.calculateFromEnd('1');
 
 
-            expect(scope.bookingitems.items[0]['previousbalance']).toBe(1.73);
-            expect(scope.bookingitems.items[0]['currentbalance']).toBe(-1);
-            expect(scope.bookingitems.items[1]['previousbalance']).toBe(-1);
-            expect(scope.bookingitems.items[1]['currentbalance']).toBe(1);
+            expect(scope.bookingitems.items[0].previousbalance).toBe(1.73);
+            expect(scope.bookingitems.items[0].currentbalance).toBe(-1);
+            expect(scope.bookingitems.items[1].previousbalance).toBe(-1);
+            expect(scope.bookingitems.items[1].currentbalance).toBe(1);
             expect(scope.currentbalance).toBe(1.00);
             expect(scope.startingbalance).toBe(1.73);
         });
@@ -71,10 +69,10 @@ describe('controllers', function () {
         });
 
         it('can import files correctly', function() {
-            var smallCsvText = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;W�hrung;Betrag;Belegdaten;\r\n' +
+            var smallCsvText = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;Währung;Betrag;Belegdaten;\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-10,55;"";';
 
-            var bigCsvText = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;W�hrung;Betrag;Belegdaten;\r\n' +
+            var bigCsvText = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;Währung;Betrag;Belegdaten;\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-10,55;"";\r\n' +
                 '21/02/2013;21/02/2013;SPAR DANKT  0554P K4 20.02.UM 12.64;;EUR;-2,73;"LASTSCHRIFT\r\n' +
                 'Belegnr.: 130624.666.462.043\r\n' +
@@ -87,7 +85,7 @@ describe('controllers', function () {
                 '----------\r\n' +
                 'EUR            2,73";\r\n' +
                 '20/02/2013;20/02/2013;ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
-                'UM 15.34 UHR Kaiser Stra�e PK BANKCARD 4;;EUR;-60,00;"";\r\n';
+                'UM 15.34 UHR Kaiser Straße PK BANKCARD 4;;EUR;-60,00;"";\r\n';
 
             var event = {target: {result: smallCsvText}};
             scope.bookingitems = new BookingItems();
@@ -118,7 +116,7 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[0].bookingdate).toBe(1361318400000);
             expect(scope.bookingitems.items[0].accountchange).toBe(-60.00);
             expect(scope.bookingitems.items[0].bookingtext).toBe('ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
-                'UM 15.34 UHR Kaiser Stra�e PK BANKCARD 4');
+                'UM 15.34 UHR Kaiser Straße PK BANKCARD 4');
 
         });
 
@@ -147,7 +145,7 @@ describe('controllers', function () {
             var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n'+
             '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n'+
                 '1;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
-                '2;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;1'
+                '2;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;1';
 
             var event = {target: {result: smallCsvText}};
             scope.bookingitems = new BookingItems();
@@ -166,7 +164,7 @@ describe('controllers', function () {
         });
 
         it('can merge bank-file and app-file correctly', function() {
-            var bankFile = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;W�hrung;Betrag;Belegdaten;\r\n' +
+            var bankFile = 'Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;Währung;Betrag;Belegdaten;\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-1,00;"";\r\n' +
                 '22/02/2013;22/02/2013;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;;EUR;-2,00;"";\r\n' +
                 '21/02/2013;21/02/2013;SPAR DANKT  0554P K4 20.02.UM 12.64;;EUR;-2,50;"";';
@@ -188,11 +186,11 @@ describe('controllers', function () {
         it('can import multiple files', function() {
             var fileList = [{a:1}, {b:2}];
             var callCount = 0;
-            scope.import = function() {callCount++};
+            scope.import = function() {callCount++;};
             scope.setFile({files: fileList});
 
             expect(callCount).toBe(2);
-        })
+        });
 
     });
 });

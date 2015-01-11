@@ -1,6 +1,6 @@
 {
   "name": "bankaustria-trend-analyzer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "build/bankaustria-trend-analyzer.min.js",
   "description": "Simple directive that turns arrays and objects into downloadable CSV files",
   "repository": {
@@ -51,7 +51,8 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-coverage": "~0.2.7",
     "karma-junit-reporter": "~0.2.2",
-    "codeclimate-test-reporter": "0.0.4"
+    "codeclimate-test-reporter": "0.0.4",
+    "grunt-sonar-runner": "~2.4.1"
   },
   "engines": {
     "node": ">=0.8.0"

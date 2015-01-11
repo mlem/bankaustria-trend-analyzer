@@ -124,7 +124,7 @@ describe('BookingItems', function () {
             expect(bookingItems.items.length).toBe(1);
             expect(bookingItems.items[0].artificialId).toBe(0);
             expect(bookingItems.items[0].hash).toBe(oldestItem.hash);
-        })
+        });
 
 
     });

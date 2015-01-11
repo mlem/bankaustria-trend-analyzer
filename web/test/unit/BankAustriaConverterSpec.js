@@ -18,7 +18,7 @@ describe('Convert', function () {
                     'Valutadatum': '21/02/2013',
                     'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                     'Interne Notiz': '',
-                    'W�hrung': 'EUR',
+                    'Währung': 'EUR',
                     'Betrag': '-2,73',
                     'Belegdaten': 'LASTSCHRIFT'
                 });
@@ -74,7 +74,7 @@ describe('Convert', function () {
                     'Valutadatum': '21/02/2013',
                     'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                     'Interne Notiz': '',
-                    'W�hrung': 'EUR',
+                    'Währung': 'EUR',
                     'Betrag': '-2,73',
                     'Belegdaten': 'LASTSCHRIFT'
                 });
@@ -92,7 +92,7 @@ describe('Convert', function () {
                 'Valutadatum': '22/02/2013',
                 'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                 'Interne Notiz': '',
-                'W�hrung': 'EUR',
+                'Währung': 'EUR',
                 'Betrag': '2,00',
                 'Belegdaten': 'LASTSCHRIFT'
             };
@@ -100,7 +100,7 @@ describe('Convert', function () {
                 'Valutadatum': '21/02/2013',
                 'Buchungstext ': 'SPAR DANKT  0554P K4 20.02.UM 12.64',
                 'Interne Notiz': '',
-                'W�hrung': 'EUR',
+                'Währung': 'EUR',
                 'Betrag': '-2,73',
                 'Belegdaten': 'LASTSCHRIFT'
             };

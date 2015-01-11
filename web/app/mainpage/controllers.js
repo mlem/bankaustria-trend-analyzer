@@ -1,4 +1,3 @@
-'use strict';
 
 /* Controllers */
 
@@ -63,7 +62,7 @@ function BankListController($scope) {
     $scope.import = function (inputfile) {
         console.log(inputfile.name);
         var reader = new FileReader();
-        reader.readAsText(inputfile);
+        reader.readAsText(inputfile, 'ISO-8859-1');
         reader.onload = $scope.loadData;
         reader.onerror = function (file) {
             alert('Unable to read ' + file.fileName);

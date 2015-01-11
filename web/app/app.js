@@ -1,5 +1,3 @@
-'use strict';
-
 /* App Module */
 
 var bankaustriaTrendAnalyzer = angular.module('bankaustriaTrendAnalyzer', ['ngSanitize', 'ngCsv']);

@@ -7,10 +7,12 @@ An Open Source Project to display your account changes.
 [![Build Status][travis-image]][travis-url] [![Code Climate][code-climate-image]][code-climate-url] [![Test Coverage][test-coverage-image]][code-climate-url]
 ## TODO
 
-* Export current state to file (if possible) *done*
-* Import and _MERGE_ files *done*
-* Encrypt file and make it password safe *dropped*
 * show graphs with angular-charts *in progress*
+* create some ux structure *not started yet*
+  * a tab for import with file + textfield *not started yet*
+  * a tab for data *not started yet*
+  * a tab for trend-graph *not started yet*
+  * a tab for statistics *not started yet*
 
 ### Prerequisites:
 

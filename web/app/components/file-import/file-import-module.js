@@ -1,1 +1,0 @@
-var fileReaderModule = angular.module('fileReaderModule', []);

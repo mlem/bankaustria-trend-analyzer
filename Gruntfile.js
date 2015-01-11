@@ -239,6 +239,6 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
     grunt.registerTask('livereload', ['default', 'watch']);
     grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'buildcontrol:pages']);
-    grunt.registerTask('sonar', ['clean', 'karma:unit', 'sonarRunner:analysis']);
+    grunt.registerTask('sonar', ['test', 'sonarRunner:analysis']);
 
 };

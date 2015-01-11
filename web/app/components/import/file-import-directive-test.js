@@ -2,7 +2,7 @@ describe('File Reader Directive', function() {
     var $compile;
     var $rootScope;
 
-    beforeEach(module('fileReaderModule'));
+    beforeEach(module('bankaustriaTrendAnalyzer.import.fileimport-directive'));
 
     beforeEach(inject(function(_$compile_, _$rootScope_){
         $compile = _$compile_;

@@ -7,6 +7,7 @@ An Open Source Project to display your account changes.
 [![Build Status][travis-image]][travis-url] [![Code Climate][code-climate-image]][code-climate-url] [![Test Coverage][test-coverage-image]][code-climate-url]
 ## TODO
 
+* change app layout (internal file structure) to meet [Best Practice Recommendations for Angular App Structure][best-practice-url]
 * show graphs with angular-charts *in progress*
 * create some ux structure *not started yet*
   * a tab for import with file + textfield *not started yet*
@@ -52,3 +53,5 @@ bankaustria-trend-analyzer is freely distributable under the terms of the [MIT l
 
 [code-climate-image]: https://codeclimate.com/github/mlem/bankaustria-trend-analyzer/badges/gpa.svg
 [code-climate-url]: https://codeclimate.com/github/mlem/bankaustria-trend-analyzer
+
+[best-practice-url]: https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub

@@ -5,7 +5,7 @@ var bankaustriaTrendAnalyzer =
         [
             'ngSanitize',
             'ngCsv',
-            'fileReaderModule'
+            'bankaustriaTrendAnalyzer.import'
         ]);
 bankaustriaTrendAnalyzer.controller('BankListController', ['$scope', BankListController]);
 

@@ -184,22 +184,15 @@ describe('controllers', function () {
         });
 
         describe('can import multiple files', function () {
-            var callCount = 0;
-            beforeEach(function (done) {
-                var fileList = [
-                    {a: 1},
-                    {b: 2}
-                ];
-                scope.import = function () {
-                    callCount++;
-                };
-                scope.importfiles = fileList;
-                done();
-            });
 
-            it('test', function (done) {
+
+            it("asynchronosly by model watching", function () {
+                var fileList = [{},{}];
+                var callCount = 0;
+                scope.import = function () { callCount++; };
+                scope.importfiles = fileList;
+                scope.$apply();
                 expect(callCount).toBe(2);
-                done();
             });
 
         });

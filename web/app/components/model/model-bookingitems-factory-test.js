@@ -7,8 +7,11 @@ describe('BookingItems', function () {
         var youngestItem;
         var oldestItem;
 
-        beforeEach(function () {
-            bookingItems = new BookingItems();
+        beforeEach(module('bankaustriaTrendAnalyzer.model'));
+
+        beforeEach(inject(function (_BookingItems_) {
+            var bookingItemsFactory = _BookingItems_;
+            bookingItems = bookingItemsFactory.build({items: []});
             middleItem = new BookingItem();
             middleItem.artificialId = 0;
             middleItem.accountchange = 1;
@@ -40,7 +43,7 @@ describe('BookingItems', function () {
             oldestItem.previousbalance = 0;
             oldestItem.hash = oldestItem.hashCode();
 
-        });
+        }));
 
         it('when new item has later date', function () {
             bookingItems.merge([youngestItem]);

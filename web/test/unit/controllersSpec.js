@@ -6,11 +6,12 @@ describe('controllers', function () {
 
         var scope;
         var controller;
+        var bookingItemsFactory;
 
         beforeEach(module('bankaustriaTrendAnalyzer'));
 
-        beforeEach(inject(function ($rootScope, $controller) {
-
+        beforeEach(inject(function ($rootScope, $controller, _BookingItems_) {
+            bookingItemsFactory = _BookingItems_;
             scope = $rootScope.$new();
             controller = $controller(BankListController, {$scope: scope});
 
@@ -88,7 +89,7 @@ describe('controllers', function () {
                 'UM 15.34 UHR Kaiser Straße PK BANKCARD 4;;EUR;-60,00;"";\r\n';
 
             var event = {target: {result: smallCsvText}};
-            scope.bookingitems = new BookingItems();
+            scope.bookingitems = bookingItemsFactory.build({items: []});
             scope.loadData(event);
             expect(scope.bookingitems.items.length).toBe(1);
             expect(scope.bookingitems.items[0].currentbalance).toBe(0);
@@ -130,7 +131,7 @@ describe('controllers', function () {
                 '0;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;113';
 
             var event = {target: {result: smallCsvText}};
-            scope.bookingitems = new BookingItems();
+            scope.bookingitems = bookingItemsFactory.build({items: []});
             scope.loadData(event);
             expect(scope.bookingitems.items.length).toBe(1);
             expect(scope.bookingitems.items[0].currentbalance).toBe(-123.82);
@@ -148,7 +149,7 @@ describe('controllers', function () {
                 '2;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;1';
 
             var event = {target: {result: smallCsvText}};
-            scope.bookingitems = new BookingItems();
+            scope.bookingitems = bookingItemsFactory.build({items: []});
             scope.loadData(event);
             expect(scope.bookingitems.items.length).toBe(3);
             expect(scope.bookingitems.items[0].bookingdate).toBe(1361404800000);
@@ -172,7 +173,7 @@ describe('controllers', function () {
                 '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n' +
                 '1;1361491200000;-2;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
                 '2;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483773;1';
-            scope.bookingitems = new BookingItems();
+            scope.bookingitems = bookingItemsFactory.build({items: []});
             scope.loadData({target: {result: bankFile}});
             expect(scope.bookingitems.items.length).toBe(3);
 

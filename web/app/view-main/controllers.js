@@ -1,9 +1,9 @@
 
 /* Controllers */
 
-function BankListController($scope) {
+function BankListController($scope, BookingItems) {
 
-    $scope.bookingitems = new BookingItems();
+    $scope.bookingitems = BookingItems.build({items: []});
 
     $scope.$watch('currentbalance', function (newValue) {
         $scope.calculateFromEnd(newValue);
@@ -124,5 +124,5 @@ function BankListController($scope) {
 }
 
 
-BankListController.$inject = ['$scope'];
+BankListController.$inject = ['$scope', 'BookingItems'];
 

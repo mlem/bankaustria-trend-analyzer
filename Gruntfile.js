@@ -74,6 +74,8 @@ module.exports = function (grunt) {
                     toBe: false,
                     FileReader: false,
                     spyOn: false,
+					escape: false,
+					decodeURIComponent: false,
                     window: false
                 },
                 curly: true,

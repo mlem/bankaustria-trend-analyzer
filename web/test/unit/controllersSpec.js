@@ -148,8 +148,13 @@ describe('controllers', function () {
                 '2;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483773;1';
             beforeEach(function (done) {
                 scope.bookingitems = bookingItemsFactory.build({items: []});
-                var blob = new Blob([appFile], {
-                    type: "text/csv;charset=utf-8;"});
+				
+				var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
+                 window.MozBlobBuilder || window.MSBlobBuilder;
+				var bb = new BlobBuilder();
+				bb.append(appFile);
+				var blob = bb.getBlob('text/csv;charset=utf-8;');
+				
                 var oldLoadData = scope.loadData;
                 scope.loadData = function (event) {
                     oldLoadData(event);
@@ -192,8 +197,13 @@ describe('controllers', function () {
 
             beforeEach(function (done) {
                 scope.bookingitems = bookingItemsFactory.build({items: []});
-                var blob = new Blob([smallCsvText], {
-                    type: "text/csv;charset=ISO-8859-1;"});
+				
+				var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
+                 window.MozBlobBuilder || window.MSBlobBuilder;
+				var bb = new BlobBuilder();
+				bb.append(smallCsvText);
+				var blob = bb.getBlob('text/csv;charset=ISO-8859-1;');
+               
                 var oldLoadData = scope.loadData;
                 scope.loadData = function (event) {
                     oldLoadData(event);

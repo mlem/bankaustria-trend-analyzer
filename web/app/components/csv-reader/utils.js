@@ -1,5 +1,3 @@
-
-
 function DateParser() {
     function splitDateString(dateString) {
         if (dateString.indexOf('/') > 0) {

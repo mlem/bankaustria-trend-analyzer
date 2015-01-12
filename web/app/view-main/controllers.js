@@ -1,14 +1,12 @@
-
 /* Controllers */
 
-function BankListController($scope, BookingItems) {
+function BankListController($scope, BookingItems, BookingItem, BankAustriaConverter) {
 
-    $scope.bookingitems = BookingItems.build({items: []});
+    $scope.bookingitems = BookingItems.build();
 
     $scope.$watch('currentbalance', function (newValue) {
         $scope.calculateFromEnd(newValue);
     });
-
 
     $scope.currentbalance = 0;
     $scope.startingbalance = 0;
@@ -28,8 +26,7 @@ function BankListController($scope, BookingItems) {
     function convertFileToData(textFromFile) {
         var reader = new CsvReader();
         var values = reader.asObjects(textFromFile);
-        var converter = new BankAustriaConverter();
-        return converter.convertAll(values);
+        return BankAustriaConverter.convertAll(values);
     }
 
     $scope.loadData = function (event) {
@@ -53,6 +50,7 @@ function BankListController($scope, BookingItems) {
                 obj.id = parseInt(obj.id, 10);
                 obj.bookingdate = parseInt(obj.bookingdate, 10);
                 obj.hash = parseInt(obj.hash, 10);
+                values[i] = BookingItem.build(obj);
             }
             $scope.bookingitems.merge(values);
             $scope.currentbalance = $scope.bookingitems.items[$scope.bookingitems.items.length - 1].currentbalance;
@@ -124,5 +122,5 @@ function BankListController($scope, BookingItems) {
 }
 
 
-BankListController.$inject = ['$scope', 'BookingItems'];
+BankListController.$inject = ['$scope', 'BookingItems', 'BookingItem', 'BankAustriaConverter'];
 

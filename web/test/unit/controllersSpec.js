@@ -10,15 +10,14 @@ describe('controllers', function () {
 
         beforeEach(module('bankaustriaTrendAnalyzer'));
 
-        beforeEach(inject(function ($rootScope, $controller, _BookingItems_) {
+        beforeEach(inject(function ($rootScope, $controller, _BookingItems_, _BookingItem_, _BankAustriaConverter_) {
             bookingItemsFactory = _BookingItems_;
             scope = $rootScope.$new();
-            controller = $controller(BankListController, {$scope: scope});
+            controller = $controller(BankListController, {$scope: scope, BookingItems: bookingItemsFactory, BankAustriaConverter: _BankAustriaConverter_});
 
-            scope.bookingitems.items = [
-                {'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'},
-                {'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'}
-            ];
+            scope.bookingitems = _BookingItems_.build();
+            scope.bookingitems.addItem({'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'});
+            scope.bookingitems.addItem({'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'});
         }));
 
         it('shows a list of account changes', function () {
@@ -89,7 +88,7 @@ describe('controllers', function () {
                 'UM 15.34 UHR Kaiser Straße PK BANKCARD 4;;EUR;-60,00;"";\r\n';
 
             var event = {target: {result: smallCsvText}};
-            scope.bookingitems = bookingItemsFactory.build({items: []});
+            scope.bookingitems = bookingItemsFactory.build();
             scope.loadData(event);
             expect(scope.bookingitems.items.length).toBe(1);
             expect(scope.bookingitems.items[0].currentbalance).toBe(0);
@@ -97,7 +96,6 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[0].bookingdate).toBe(1361491200000);
             expect(scope.bookingitems.items[0].accountchange).toBe(-10.55);
             expect(scope.bookingitems.items[0].bookingtext).toBe('MCDONALDS 66 0066  K4 22.02.UM 15.26     O');
-
 
             event = {target: {result: bigCsvText}};
             scope.loadData(event);

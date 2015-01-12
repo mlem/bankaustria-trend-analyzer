@@ -1,3 +1,12 @@
+var sourcePreprocessors = 'coverage';
+function isDebug(argument) {
+    return argument === '--debug';
+}
+if (process.argv.some(isDebug)) {
+    sourcePreprocessors = [];
+}
+
+
 module.exports = function (config) {
     config.set({
         basePath: '.',
@@ -18,7 +27,7 @@ module.exports = function (config) {
             'web/test/unit/**/*.js'
         ],
 
-        preprocessors: { 'web/app/**/*.js': 'coverage' },
+        preprocessors: { 'web/app/**/*.js': sourcePreprocessors },
 
         frameworks: ["jasmine"],
 

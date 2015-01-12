@@ -1,36 +1,4 @@
-function BankAustriaConverter() {
-    this.parser = new DateParser();
 
-    function parseAmount(value) {
-        var amount = value.Betrag;
-        var amountWithoutDelimiters = amount.replace(/\./, '').replace(/\,/, '');
-        return parseInt(amountWithoutDelimiters, 10) / 100;
-    }
-
-    this.convert = function (value) {
-        var date = this.parser.parse(value.Buchungsdatum);
-        var parsedAmount = parseAmount(value);
-        var object = new BookingItem();
-        object.bookingdate = date.getTime();
-        object.accountchange = parsedAmount;
-        object.bookingtext = value['Buchungstext '];
-        object.hash = object.hashCode();
-        return  object;
-    };
-
-    this.convertAll = function (data) {
-        var values = [];
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var item = this.convert(data[key]);
-                values.push(item);
-                item.artificialId = values.length;
-                item.id = values.length;
-            }
-        }
-        return values;
-    };
-}
 
 function DateParser() {
     function splitDateString(dateString) {

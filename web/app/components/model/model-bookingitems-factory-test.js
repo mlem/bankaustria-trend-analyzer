@@ -9,10 +9,11 @@ describe('BookingItems', function () {
 
         beforeEach(module('bankaustriaTrendAnalyzer.model'));
 
-        beforeEach(inject(function (_BookingItems_) {
+        beforeEach(inject(function (_BookingItems_, _BookingItem_) {
             var bookingItemsFactory = _BookingItems_;
+            var bookingItemFactory = _BookingItem_;
             bookingItems = bookingItemsFactory.build({items: []});
-            middleItem = new BookingItem();
+            middleItem = {};
             middleItem.artificialId = 0;
             middleItem.accountchange = 1;
             // 21/02/2013
@@ -20,10 +21,10 @@ describe('BookingItems', function () {
             middleItem.bookingtext = 'first';
             middleItem.currentbalance = 0;
             middleItem.previousbalance = 0;
-            middleItem.hash = middleItem.hashCode();
+            middleItem = bookingItemFactory.build(middleItem);
             bookingItems.items = [middleItem];
 
-            youngestItem = new BookingItem();
+            youngestItem = {};
             youngestItem.artificialId = 1;
             youngestItem.accountchange = 2;
             // 22/02/2013
@@ -31,9 +32,9 @@ describe('BookingItems', function () {
             youngestItem.bookingtext = 'sec';
             youngestItem.currentbalance = 0;
             youngestItem.previousbalance = 0;
-            youngestItem.hash = youngestItem.hashCode();
+            youngestItem = bookingItemFactory.build(youngestItem);
 
-            oldestItem = new BookingItem();
+            oldestItem = {};
             oldestItem.artificialId = 2;
             oldestItem.accountchange = 2;
             // 20/02/2013
@@ -41,7 +42,7 @@ describe('BookingItems', function () {
             oldestItem.bookingtext = 'third';
             oldestItem.currentbalance = 0;
             oldestItem.previousbalance = 0;
-            oldestItem.hash = oldestItem.hashCode();
+            oldestItem = bookingItemFactory.build(oldestItem);
 
         }));
 

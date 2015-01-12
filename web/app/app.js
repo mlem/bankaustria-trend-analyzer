@@ -6,9 +6,10 @@ var bankaustriaTrendAnalyzer =
             'ngSanitize',
             'ngCsv',
             'bankaustriaTrendAnalyzer.model',
+            'bankaustriaTrendAnalyzer.bankaustria-converter',
             'bankaustriaTrendAnalyzer.import'
         ]);
-bankaustriaTrendAnalyzer.controller('BankListController', ['$scope', BankListController]);
+bankaustriaTrendAnalyzer.controller('BankListController', ['$scope', 'BookingItems', 'BankAustriaConverter', BankListController]);
 
 bankaustriaTrendAnalyzer.config(['$compileProvider', function ($compileProvider) {
     $compileProvider.debugInfoEnabled(true);

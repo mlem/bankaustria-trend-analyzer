@@ -1,14 +1,17 @@
-angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [])
+angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [
+        'bankaustriaTrendAnalyzer.model.bookingitem'])
 
-    .factory('BookingItems', function () {
+    .factory('BookingItems', ['BookingItem', function (BookingItem) {
         "use strict";
 
-        function BookingItems(items) {
-            this.items = items;
+        var bookingItemFactory = BookingItem;
+
+        function BookingItems() {
+            this.items = [];
         }
 
         var isBookingdateInTheMiddleOfArray = function (item, itemArray) {
-            return item.bookingdate > itemArray[0].bookingdate && item.bookingdate < itemArray[itemArray.length - 1].bookingdate;
+            return item.bookingdate >= itemArray[0].bookingdate && item.bookingdate <= itemArray[itemArray.length - 1].bookingdate;
         };
         var isBookingdateYounger = function (item, itemArray) {
             return item.bookingdate > itemArray[itemArray.length - 1].bookingdate;
@@ -26,6 +29,7 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [])
                     return;
                 }
             }
+            itemArray.unshift(item);
         };
         var resetArtificialIds = function (itemArray) {
             for (var i = 0; i < itemArray.length; i++) {
@@ -40,7 +44,13 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [])
             }
             return false;
         };
-        BookingItems.prototype.addItem = function (item) {
+        BookingItems.prototype.addItem = function (data) {
+            var item;
+            if (data instanceof BookingItem) {
+                item = data;
+            } else {
+                item = bookingItemFactory.build(data);
+            }
             if (this.items.length === 0) {
                 this.items.push(item);
             } else if (isBookingdateInTheMiddleOfArray(item, this.items)) {
@@ -71,9 +81,11 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [])
             resetArtificialIds(this.items);
         };
 
-        BookingItems.build = function(data) {
-            return new BookingItems(data.items);
+        BookingItems.build = function () {
+            return new BookingItems();
         };
 
         return BookingItems;
-    });
+    }]);
+
+

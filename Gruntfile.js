@@ -235,7 +235,7 @@ module.exports = function (grunt) {
             'livereload'
         ]);
     });
-    grunt.registerTask('test', ['default', 'karma:unit']);
+    grunt.registerTask('test', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'karma:unit']);
     grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
     grunt.registerTask('livereload', ['default', 'watch']);
     grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'buildcontrol:pages']);

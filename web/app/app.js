@@ -9,7 +9,7 @@ var bankaustriaTrendAnalyzer =
             'bankaustriaTrendAnalyzer.converter',
             'bankaustriaTrendAnalyzer.import'
         ]);
-bankaustriaTrendAnalyzer.controller('BankListController', ['$scope', 'BookingItems', 'BankAustriaConverter', BankListController]);
+bankaustriaTrendAnalyzer.controller('BankListController', ['$scope', 'BookingItems', 'BookingItem', 'BankAustriaConverter', BankListController]);
 
 bankaustriaTrendAnalyzer.config(['$compileProvider', function ($compileProvider) {
     $compileProvider.debugInfoEnabled(true);

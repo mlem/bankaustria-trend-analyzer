@@ -3,6 +3,7 @@
 function BankListController($scope, BookingItems, BookingItem, BankAustriaConverter) {
 
     $scope.bookingitems = BookingItems.build();
+    var bankAustriaConverter = BankAustriaConverter;
 
     $scope.$watch('currentbalance', function (newValue) {
         $scope.calculateFromEnd(newValue);
@@ -33,11 +34,13 @@ function BankListController($scope, BookingItems, BookingItem, BankAustriaConver
             obj.bookingdate = parseInt(obj.bookingdate, 10);
             obj.artificialId = parseInt(obj.artificialId, 10);
             obj.id = parseInt(obj.id, 10);
-            obj.bookingdate = parseInt(obj.bookingdate, 10);
+
+            // nice solution from stackoverflow: http://stackoverflow.com/questions/5396560/how-do-i-convert-special-utf-8-chars-to-their-iso-8859-1-equivalent-using-javasc
+            obj.bookingtext = decodeURIComponent(escape(obj.bookingtext));
             obj.hash = parseInt(obj.hash, 10);
             result.push(BookingItem.build(obj));
         }
-        return result;
+        return result.reverse();
     }
 
     $scope.loadData = function (event) {
@@ -45,7 +48,7 @@ function BankListController($scope, BookingItems, BookingItem, BankAustriaConver
         var reader = new CsvReader();
         var values = reader.asObjects(textFromFile);
         if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
-            $scope.bookingitems.merge(BankAustriaConverter.convertAll(values));
+            $scope.bookingitems.merge(bankAustriaConverter.convertAll(values));
             $scope.calculateFromEnd($scope.currentbalance);
         } else if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
             $scope.bookingitems.merge(appConvertAll(values));

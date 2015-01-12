@@ -140,25 +140,84 @@ describe('controllers', function () {
         });
 
 
-        it('can import exported file with two datasets correctly', function () {
+        describe('can import exported utf-8 file', function () {
+
+            var appFile = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n' +
+                '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n' +
+                '1;1361491200000;-2;MCDONALDS äöü66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
+                '2;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483773;1';
+            beforeEach(function (done) {
+                scope.bookingitems = bookingItemsFactory.build({items: []});
+                var blob = new Blob([appFile], {
+                    type: "text/csv;charset=utf-8;"});
+                var oldLoadData = scope.loadData;
+                scope.loadData = function (event) {
+                    oldLoadData(event);
+                    done();
+                };
+                scope.import(blob);
+            });
+
+            it('async assertions', function (done) {
+                expect(scope.bookingitems.items.length).toBe(3);
+
+                expect(scope.bookingitems.items[0].bookingdate).toBe(1361404800000);
+                expect(scope.bookingitems.items[0].accountchange).toBe(-2.5);
+                expect(scope.bookingitems.items[0].bookingtext).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
+                expect(scope.bookingitems.items[0].hash).toBe(-95247701412);
+
+                expect(scope.bookingitems.items[1].bookingdate).toBe(1361491200000);
+                expect(scope.bookingitems.items[1].accountchange).toBe(-2);
+                expect(scope.bookingitems.items[1].bookingtext).toBe('MCDONALDS äöü66 0066  K4 22.02.UM 15.26     O');
+                expect(scope.bookingitems.items[1].hash).toBe(-14165366243);
+
+                expect(scope.bookingitems.items[2].bookingdate).toBe(1361491200000);
+                expect(scope.bookingitems.items[2].accountchange).toBe(-1);
+                expect(scope.bookingitems.items[2].bookingtext).toBe('MCDONALDS 66 0066  K4 22.02.UM 15.26     O');
+                expect(scope.bookingitems.items[2].hash).toBe(-14546483804);
+
+                expect(scope.bookingitems.items[0].accountchange).toBe(-2.5);
+                expect(scope.bookingitems.items[1].accountchange).toBe(-2);
+                expect(scope.bookingitems.items[2].accountchange).toBe(-1);
+                done();
+            });
+
+        });
+
+        describe('can import exported iso file', function () {
             var smallCsvText = 'artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash;id\r\n' +
                 '0;1361404800000;-2.5;SPAR DANKT  0554P K4 20.02.UM 12.64;1;3.5;-95247701412;3\r\n' +
-                '1;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
+                '1;1361491200000;-1;MCDONALDSöäü 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483804;2\r\n' +
                 '2;1369000800000;-2.47;BILLA DANKT  1610  K4 18.05.UM 08.21     O;-123.82;-121.35;-1050225974289;1';
 
-            var event = {target: {result: smallCsvText}};
-            scope.bookingitems = bookingItemsFactory.build({items: []});
-            scope.loadData(event);
-            expect(scope.bookingitems.items.length).toBe(3);
-            expect(scope.bookingitems.items[0].bookingdate).toBe(1361404800000);
-            expect(scope.bookingitems.items[0].accountchange).toBe(-2.5);
-            expect(scope.bookingitems.items[0].bookingtext).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
-            expect(scope.bookingitems.items[1].bookingdate).toBe(1361491200000);
-            expect(scope.bookingitems.items[1].accountchange).toBe(-1);
-            expect(scope.bookingitems.items[1].bookingtext).toBe('MCDONALDS 66 0066  K4 22.02.UM 15.26     O');
-            expect(scope.bookingitems.items[2].bookingdate).toBe(1369000800000);
-            expect(scope.bookingitems.items[2].accountchange).toBe(-2.47);
-            expect(scope.bookingitems.items[2].bookingtext).toBe('BILLA DANKT  1610  K4 18.05.UM 08.21     O');
+            beforeEach(function (done) {
+                scope.bookingitems = bookingItemsFactory.build({items: []});
+                var blob = new Blob([smallCsvText], {
+                    type: "text/csv;charset=ISO-8859-1;"});
+                var oldLoadData = scope.loadData;
+                scope.loadData = function (event) {
+                    oldLoadData(event);
+                    done();
+                };
+                scope.import(blob);
+            });
+
+            it('async assertions', function (done) {
+                expect(scope.bookingitems.items.length).toBe(3);
+                expect(scope.bookingitems.items[0].bookingdate).toBe(1361404800000);
+                expect(scope.bookingitems.items[0].accountchange).toBe(-2.5);
+                expect(scope.bookingitems.items[0].bookingtext).toBe('SPAR DANKT  0554P K4 20.02.UM 12.64');
+                expect(scope.bookingitems.items[0].hash).toBe(-95247701412);
+                expect(scope.bookingitems.items[1].bookingdate).toBe(1361491200000);
+                expect(scope.bookingitems.items[1].accountchange).toBe(-1);
+                expect(scope.bookingitems.items[1].bookingtext).toBe('MCDONALDSöäü 66 0066  K4 22.02.UM 15.26     O');
+                expect(scope.bookingitems.items[1].hash).toBe(-12182367868);
+                expect(scope.bookingitems.items[2].bookingdate).toBe(1369000800000);
+                expect(scope.bookingitems.items[2].accountchange).toBe(-2.47);
+                expect(scope.bookingitems.items[2].bookingtext).toBe('BILLA DANKT  1610  K4 18.05.UM 08.21     O');
+                expect(scope.bookingitems.items[2].hash).toBe(-1050225974289);
+                done();
+            });
 
         });
 
@@ -186,9 +245,14 @@ describe('controllers', function () {
 
 
             it("asynchronosly by model watching", function () {
-                var fileList = [{},{}];
+                var fileList = [
+                    {},
+                    {}
+                ];
                 var callCount = 0;
-                scope.import = function () { callCount++; };
+                scope.import = function () {
+                    callCount++;
+                };
                 scope.importfiles = fileList;
                 scope.$apply();
                 expect(callCount).toBe(2);

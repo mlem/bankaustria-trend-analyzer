@@ -1,4 +1,4 @@
-angular.module('bankaustriaTrendAnalyzer.bankaustria-converter.bankaustria-converter-factory', [
+angular.module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory', [
     'bankaustriaTrendAnalyzer.model'])
 
     .service('BankAustriaConverter', function (BookingItem) {

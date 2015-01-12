@@ -4,7 +4,7 @@ describe('Convert', function () {
         var recentDate;
         var olderDate;
 
-        beforeEach(module('bankaustriaTrendAnalyzer'));
+        beforeEach(module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory'));
 
         beforeEach(inject(function (BankAustriaConverter) {
             converter = BankAustriaConverter;

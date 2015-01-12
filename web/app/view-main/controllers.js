@@ -23,40 +23,36 @@ function BankListController($scope, BookingItems, BookingItem, BankAustriaConver
         }
     });
 
-    function convertFileToData(textFromFile) {
-        var reader = new CsvReader();
-        var values = reader.asObjects(textFromFile);
-        return BankAustriaConverter.convertAll(values);
+    function appConvertAll(values) {
+        var result = [];
+        for (var i = 0; i < values.length; i++) {
+            var obj = values[i];
+            obj.accountchange = $scope.parseBalance(obj.accountchange);
+            obj.currentbalance = $scope.parseBalance(obj.currentbalance);
+            obj.previousbalance = $scope.parseBalance(obj.previousbalance);
+            obj.bookingdate = parseInt(obj.bookingdate, 10);
+            obj.artificialId = parseInt(obj.artificialId, 10);
+            obj.id = parseInt(obj.id, 10);
+            obj.bookingdate = parseInt(obj.bookingdate, 10);
+            obj.hash = parseInt(obj.hash, 10);
+            result.push(BookingItem.build(obj));
+        }
+        return result;
     }
 
     $scope.loadData = function (event) {
         var textFromFile = event.target.result;
+        var reader = new CsvReader();
+        var values = reader.asObjects(textFromFile);
         if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
-            var convertedItems = convertFileToData(textFromFile);
-            $scope.bookingitems.merge(convertedItems);
+            $scope.bookingitems.merge(BankAustriaConverter.convertAll(values));
             $scope.calculateFromEnd($scope.currentbalance);
-            $scope.$apply();
-        }
-        if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
-            var reader = new CsvReader();
-            var values = reader.asObjects(textFromFile);
-            for (var i = 0; i < values.length; i++) {
-                var obj = values[i];
-                obj.accountchange = $scope.parseBalance(obj.accountchange);
-                obj.currentbalance = $scope.parseBalance(obj.currentbalance);
-                obj.previousbalance = $scope.parseBalance(obj.previousbalance);
-                obj.bookingdate = parseInt(obj.bookingdate, 10);
-                obj.artificialId = parseInt(obj.artificialId, 10);
-                obj.id = parseInt(obj.id, 10);
-                obj.bookingdate = parseInt(obj.bookingdate, 10);
-                obj.hash = parseInt(obj.hash, 10);
-                values[i] = BookingItem.build(obj);
-            }
-            $scope.bookingitems.merge(values);
+        } else if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
+            $scope.bookingitems.merge(appConvertAll(values));
             $scope.currentbalance = $scope.bookingitems.items[$scope.bookingitems.items.length - 1].currentbalance;
             $scope.startingbalance = $scope.bookingitems.items[0].previousbalance;
-            $scope.$apply();
         }
+        $scope.$apply();
     };
 
     $scope.import = function (inputfile) {

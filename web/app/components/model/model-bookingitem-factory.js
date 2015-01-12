@@ -1,16 +1,6 @@
 angular.module('bankaustriaTrendAnalyzer.model.bookingitem', [])
 
     .factory('BookingItem', function () {
-        "use strict";
-        function BookingItem(artificialId, bookingdate, accountchange, bookingtext, currentbalance, previousbalance) {
-            this.artificialId = artificialId;
-            this.bookingdate = bookingdate;
-            this.accountchange = accountchange;
-            this.bookingtext = bookingtext;
-            this.currentbalance = currentbalance;
-            this.previousbalance = previousbalance;
-            this.hash = hashCode(this);
-        }
 
         String.prototype.hashCode = function () {
             var hash = 0, i, chr, len;
@@ -40,6 +30,16 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitem', [])
             result = 31 * result + item.bookingtext.hashCode();
             return result;
         };
+
+        function BookingItem(artificialId, bookingdate, accountchange, bookingtext, currentbalance, previousbalance) {
+            this.artificialId = artificialId;
+            this.bookingdate = bookingdate;
+            this.accountchange = accountchange;
+            this.bookingtext = bookingtext;
+            this.currentbalance = currentbalance;
+            this.previousbalance = previousbalance;
+            this.hash = hashCode(this);
+        }
 
         BookingItem.build = function (data) {
             return new BookingItem(

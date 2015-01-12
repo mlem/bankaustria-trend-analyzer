@@ -2,7 +2,6 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [
         'bankaustriaTrendAnalyzer.model.bookingitem'])
 
     .factory('BookingItems', ['BookingItem', function (BookingItem) {
-        "use strict";
 
         var bookingItemFactory = BookingItem;
 

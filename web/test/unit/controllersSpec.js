@@ -1,5 +1,21 @@
 /* jasmine specs for controllers go here */
 
+function browserCompatibleBlobCreator(appFile, mimeString) {
+    var blob;
+    try {
+        blob = new Blob([appFile], {type: mimeString});
+    } catch (e) {
+        // The BlobBuilder API has been deprecated in favour of Blob, but older
+        // browsers don't know about the Blob constructor
+        // IE10 also supports BlobBuilder, but since the `Blob` constructor
+        //  also works, there's no need to add `MSBlobBuilder`.
+        var BlobBuilder = window.WebKitBlobBuilder || window.MozBlobBuilder;
+        var bb = new BlobBuilder();
+        bb.append(appFile);
+        blob = bb.getBlob(mimeString);
+    }
+    return blob;
+}
 describe('controllers', function () {
 
     describe('BankListController', function () {
@@ -13,11 +29,23 @@ describe('controllers', function () {
         beforeEach(inject(function ($rootScope, $controller, _BookingItems_, _BookingItem_, _BankAustriaConverter_) {
             bookingItemsFactory = _BookingItems_;
             scope = $rootScope.$new();
-            controller = $controller(BankListController, {$scope: scope, BookingItems: bookingItemsFactory, BankAustriaConverter: _BankAustriaConverter_});
+            controller = $controller(BankListController, {
+                $scope: scope,
+                BookingItems: bookingItemsFactory,
+                BankAustriaConverter: _BankAustriaConverter_
+            });
 
             scope.bookingitems = _BookingItems_.build();
-            scope.bookingitems.addItem({'bookingdate': 1361401200000, 'accountchange': -2.73, 'bookingtext': 'SPAR DANKT'});
-            scope.bookingitems.addItem({'bookingdate': 1361487600000, 'accountchange': 2, 'bookingtext': 'MCDONALDS BLABLABLA'});
+            scope.bookingitems.addItem({
+                'bookingdate': 1361401200000,
+                'accountchange': -2.73,
+                'bookingtext': 'SPAR DANKT'
+            });
+            scope.bookingitems.addItem({
+                'bookingdate': 1361487600000,
+                'accountchange': 2,
+                'bookingtext': 'MCDONALDS BLABLABLA'
+            });
         }));
 
         it('shows a list of account changes', function () {
@@ -115,7 +143,7 @@ describe('controllers', function () {
             expect(scope.bookingitems.items[0].bookingdate).toBe(1361318400000);
             expect(scope.bookingitems.items[0].accountchange).toBe(-60.00);
             expect(scope.bookingitems.items[0].bookingtext).toBe('ABHEBUNG AUTOMAT NR. 12705 AM 20.02. ' +
-                'UM 15.34 UHR Kaiser Straße PK BANKCARD 4');
+            'UM 15.34 UHR Kaiser Straße PK BANKCARD 4');
 
         });
 
@@ -148,13 +176,9 @@ describe('controllers', function () {
                 '2;1361491200000;-1;MCDONALDS 66 0066  K4 22.02.UM 15.26     O;0;1;-14546483773;1';
             beforeEach(function (done) {
                 scope.bookingitems = bookingItemsFactory.build({items: []});
-				
-				var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
-                 window.MozBlobBuilder || window.MSBlobBuilder;
-				var bb = new BlobBuilder();
-				bb.append(appFile);
-				var blob = bb.getBlob('text/csv;charset=utf-8;');
-				
+
+                var blob = browserCompatibleBlobCreator(appFile, 'text/csv;charset=utf-8;');
+
                 var oldLoadData = scope.loadData;
                 scope.loadData = function (event) {
                     oldLoadData(event);
@@ -197,13 +221,9 @@ describe('controllers', function () {
 
             beforeEach(function (done) {
                 scope.bookingitems = bookingItemsFactory.build({items: []});
-				
-				var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||
-                 window.MozBlobBuilder || window.MSBlobBuilder;
-				var bb = new BlobBuilder();
-				bb.append(smallCsvText);
-				var blob = bb.getBlob('text/csv;charset=ISO-8859-1;');
-               
+
+                var blob = browserCompatibleBlobCreator(smallCsvText, 'text/csv;charset=ISO-8859-1;');
+
                 var oldLoadData = scope.loadData;
                 scope.loadData = function (event) {
                     oldLoadData(event);

@@ -1,21 +1,22 @@
-language: node_js
-node_js:
-- 0.10
-before_script:
-- npm install -g grunt-cli bower
-- bower install
-env:
-  global:
+env: 
+  global: 
   - secure: Oyhe1lLNVI95f1gUgBlS+VP8o+FOoaYdt5sPx+ZJV8ot1eh09QpxYa3g4XdTpQ8+cAqwHDVLeuu0dRGCzA1SF4ZkZj9O6R64nEC4P9MgnNPlbi5ryTRWHfwY4pb83gwPrLpFu4cZYKVAHa/lj8JsFiVYU/r+m23ByH5Yp6oscXw=
   - secure: bYgjxD+Jhlgb/TgJdDKGgYWM6oFuzRDcYt6hHmUl1Up0cKzkirnSrqUxZC61SwH+DP4313k+kLbmL6S7QzD94xrP4af8KfWfNEm0JS3gmsVDNEiPGV4vIQiYbCS+/cMMahTQZdQtq6unNndMPjs4peLJ3m+Ml5pSWjdSWiSiYyk=
-addons:
-  code_climate:
+  - secure: GgSdj7tdwKzsI56OVx4Z9mi0wIx8kbtrphoPLYOEeLNNNcN8Rg+knxF8d+Vh12nb7+WVc9zTJVO4BqkcQcC2rqpl2x0X5EBXCcpiGA32e+lkBi173/MPVcytazYzrV/Nr4EIjLx3/27og111CPcnpdK8snFQaAm1jROvPO6GRnk=
+addons: 
+  code_climate: 
     repo_token: 078d9b1f419fc7ca7ccd0de3d9c02843872501a5e732bcd478e9086c41a5fef2
-after_script:
-  - cat build/reports/coverage/report-lcov/lcov.info | codeclimate
-after_success:
-  -  "curl --ftp-create-dirs -T ./web/app/app.css -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/app.css"
-  -  "curl --ftp-create-dirs -T ./web/app/app.html -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/app.html"
-  -  "curl --ftp-create-dirs -T ./web/app/index.html -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/index.html"
-  -  "curl --ftp-create-dirs -T ./dist/bankaustria-trend-analyzer.min.js -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/bankaustria-trend-analyzer.min.js"
-  -  "curl --ftp-create-dirs -T ./web/app/samples/sample.csv -u $FTP_USER:$FTP_PASSWORD ftp://www.mlem.at:21/html/bank-app/samples/sample.csv"
+before_script: 
+- npm install -g grunt-cli bower
+- bower install
+node_js: 
+- 0.10
+after_script: 
+- cat build/reports/coverage/report-lcov/lcov.info | codeclimate
+after_success: 
+- curl --ftp-create-dirs -T ./web/app/app.css -u $FTP_USER:$FTP_PASSWORD $FTP_URL/html/bank-app/app.css
+- curl --ftp-create-dirs -T ./web/app/app.html -u $FTP_USER:$FTP_PASSWORD $FTP_URL/html/bank-app/app.html
+- curl --ftp-create-dirs -T ./web/app/index.html -u $FTP_USER:$FTP_PASSWORD $FTP_URL/html/bank-app/index.html
+- curl --ftp-create-dirs -T ./build/bankaustria-trend-analyzer.min.js -u $FTP_USER:$FTP_PASSWORD $FTP_URL/html/bank-app/bankaustria-trend-analyzer.min.js
+- curl --ftp-create-dirs -T ./web/app/samples/sample.csv -u $FTP_USER:$FTP_PASSWORD $FTP_URL/html/bank-app/samples/sample.csv
+language: node_js

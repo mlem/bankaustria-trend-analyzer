@@ -23,11 +23,9 @@ module.exports = function (grunt) {
             },
             library: {
                 src: [
-                    'web/app/components/**/*module.js',
                     'web/app/components/**/*.js',
                     'web/app/**/*.js',
                     'web/app/app.js',
-                    'web/app/app-controller.js',
                     'web/app/app.suffix',
                     '!**/*test.js'
                 ],
@@ -237,7 +235,7 @@ module.exports = function (grunt) {
             'livereload'
         ]);
     });
-    grunt.registerTask('test', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'karma:unit']);
+    grunt.registerTask('test', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'karma:unit', 'uglify']);
     grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
     grunt.registerTask('livereload', ['default', 'watch']);
     grunt.registerTask('deploy', ['clean:dist', 'copy:dist', 'buildcontrol:pages']);

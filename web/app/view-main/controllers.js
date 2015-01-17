@@ -1,6 +1,6 @@
 /* Controllers */
 
-function BankListController($scope, BookingItems, BookingItem, BankAustriaConverter) {
+function BankListController($scope, BookingItems, BookingItem, BankAustriaConverter, csvReaderService) {
 
     $scope.bookingitems = BookingItems.build();
     var bankAustriaConverter = BankAustriaConverter;
@@ -45,8 +45,7 @@ function BankListController($scope, BookingItems, BookingItem, BankAustriaConver
 
     $scope.loadData = function (event) {
         var textFromFile = event.target.result;
-        var reader = new CsvReader();
-        var values = reader.asObjects(textFromFile);
+        var values = csvReaderService.asObjects(textFromFile);
         if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
             $scope.bookingitems.merge(bankAustriaConverter.convertAll(values));
             $scope.calculateFromEnd($scope.currentbalance);
@@ -119,7 +118,4 @@ function BankListController($scope, BookingItems, BookingItem, BankAustriaConver
         return value >= 0 ? '' : 'red';
     };
 }
-
-
-BankListController.$inject = ['$scope', 'BookingItems', 'BookingItem', 'BankAustriaConverter'];
 

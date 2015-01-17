@@ -1,4 +1,13 @@
 describe('csv file reader', function () {
+
+    beforeEach(module('bankaustriaTrendAnalyzer.converter.csv-reader-service'));
+
+    var csvReader;
+
+    beforeEach(inject(function(csvReaderService) {
+        csvReader = csvReaderService;
+    }));
+
     describe('with objects', function () {
 
         var objectArray;
@@ -21,8 +30,7 @@ describe('csv file reader', function () {
             'UM 15.34 UHR Kaiser Straße PK BANKCARD 4;;EUR;-60,00;"";\r\n';
 
         beforeEach(function () {
-            var smallReader = new CsvReader();
-            objectArray = smallReader.asObjects(smallCsvText);
+            objectArray = csvReader.asObjects(smallCsvText);
 
         });
 
@@ -80,8 +88,7 @@ describe('csv file reader', function () {
         }
 
         it('can read multi line data', function () {
-            var reader = new CsvReader();
-            var objectArray = reader.asObjects(bigCsvText);
+            var objectArray = csvReader.asObjects(bigCsvText);
             expect(objectArray.length).toBe(3);
             var iterationKeys = Object.keys(objectArray);
             var secondObject = objectArray[iterationKeys[1]];

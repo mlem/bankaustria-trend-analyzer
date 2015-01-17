@@ -6,12 +6,11 @@ describe('Convert', function () {
 
         beforeEach(module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory'));
 
-        beforeEach(inject(function (BankAustriaConverter) {
+        beforeEach(inject(function (BankAustriaConverter, dateParserService) {
             converter = BankAustriaConverter;
 
-            var parser = new DateParser();
-            recentDate = parser.parse('05.07.2013');
-            olderDate = parser.parse('29.05.2013');
+            recentDate = dateParserService.parse('05.07.2013');
+            olderDate = dateParserService.parse('29.05.2013');
         }));
 
         it('can convert a single object', function () {

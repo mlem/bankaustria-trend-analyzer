@@ -1,9 +1,8 @@
 angular.module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory', [
-        'bankaustriaTrendAnalyzer.model'])
+    'bankaustriaTrendAnalyzer.model',
+    'bankaustriaTrendAnalyzer.converter.date-parse-service'])
 
-    .service('BankAustriaConverter', function (BookingItem) {
-
-        var parser = new DateParser();
+    .service('BankAustriaConverter', function (BookingItem, dateParserService) {
 
         function parseAmount(value) {
             var amount = value.Betrag;
@@ -12,7 +11,7 @@ angular.module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory
         }
 
         this.convert = function (value) {
-            var date = parser.parse(value.Buchungsdatum);
+            var date = dateParserService.parse(value.Buchungsdatum);
             var parsedAmount = parseAmount(value);
             var object = {};
             object.bookingdate = date.getTime();

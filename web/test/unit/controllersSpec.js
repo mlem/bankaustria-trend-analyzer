@@ -29,7 +29,7 @@ describe('controllers', function () {
         beforeEach(inject(function ($rootScope, $controller, _BookingItems_, _BookingItem_, _BankAustriaConverter_) {
             bookingItemsFactory = _BookingItems_;
             scope = $rootScope.$new();
-            controller = $controller(BankListController, {
+            controller = $controller('BankListController', {
                 $scope: scope,
                 BookingItems: bookingItemsFactory,
                 BankAustriaConverter: _BankAustriaConverter_

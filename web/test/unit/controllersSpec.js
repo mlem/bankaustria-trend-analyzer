@@ -24,7 +24,7 @@ describe('controllers', function () {
         var controller;
         var bookingItemsFactory;
 
-        beforeEach(module('bankaustriaTrendAnalyzer'));
+        beforeEach(module('bankaustriaTrendAnalyzer.controller.BankListController'));
 
         beforeEach(inject(function ($rootScope, $controller, _BookingItems_, _BookingItem_, _BankAustriaConverter_) {
             bookingItemsFactory = _BookingItems_;

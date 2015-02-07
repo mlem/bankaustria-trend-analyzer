@@ -1,7 +1,5 @@
 /* Controllers */
 angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [
-    'ngSanitize',
-    'ngCsv',
     'bankaustriaTrendAnalyzer.model',
     'bankaustriaTrendAnalyzer.converter',
     'bankaustriaTrendAnalyzer.import'

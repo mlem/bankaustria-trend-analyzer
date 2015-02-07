@@ -1,5 +1,12 @@
 /* Controllers */
-angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [])
+angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [
+    'ngSanitize',
+    'ngCsv',
+    'bankaustriaTrendAnalyzer.model',
+    'bankaustriaTrendAnalyzer.converter',
+    'bankaustriaTrendAnalyzer.import'
+    
+])
     .controller('BankListController', ['$scope', 'BookingItems', 'BookingItem', 'BankAustriaConverter', 'csvReaderService',
         function ($scope, BookingItems, BookingItem, BankAustriaConverter, csvReaderService) {
 

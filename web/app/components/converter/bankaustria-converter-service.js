@@ -2,7 +2,7 @@ angular.module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory
     'bankaustriaTrendAnalyzer.model',
     'bankaustriaTrendAnalyzer.converter.date-parse-service'])
 
-    .service('BankAustriaConverter', function (BookingItem, dateParserService) {
+    .service('BankAustriaConverter', ['BookingItem', 'dateParserService', function (BookingItem, dateParserService) {
 
         function parseAmount(value) {
             var amount = value.Betrag;
@@ -33,4 +33,4 @@ angular.module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory
             return values;
         };
 
-    });
+    }]);

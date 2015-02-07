@@ -10,10 +10,10 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [
         }
 
         var isBookingdateInTheMiddleOfArray = function (item, itemArray) {
-            return item.bookingdate >= itemArray[0].bookingdate && item.bookingdate <= itemArray[itemArray.length - 1].bookingdate;
+            return item.bookingdate >= itemArray[0].bookingdate && item.bookingdate < itemArray[itemArray.length - 1].bookingdate;
         };
         var isBookingdateYounger = function (item, itemArray) {
-            return item.bookingdate > itemArray[itemArray.length - 1].bookingdate;
+            return item.bookingdate >= itemArray[itemArray.length - 1].bookingdate;
         };
         var isBookingdateOlder = function (item, itemArray) {
             return item.bookingdate <= itemArray[0].bookingdate;
@@ -54,10 +54,10 @@ angular.module('bankaustriaTrendAnalyzer.model.bookingitems', [
                 this.items.push(item);
             } else if (isBookingdateInTheMiddleOfArray(item, this.items)) {
                 innerMerge(item, this.items);
-            } else if (isBookingdateYounger(item, this.items)) {
-                this.items.push(item);
             } else if (isBookingdateOlder(item, this.items)) {
                 this.items.unshift(item);
+            } else if (isBookingdateYounger(item, this.items)) {
+                this.items.push(item);
             }
         };
         /**

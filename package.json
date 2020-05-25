@@ -21,10 +21,11 @@
   "dependencies": {},
   "devDependencies": {
     "bower": "^1.3.12",
+    "codeclimate-test-reporter": "0.0.4",
     "connect-livereload": "^0.2.0",
     "grunt": "~0.4.1",
-    "grunt-cli": "^0.1.13",
     "grunt-build-control": "^0.1.3",
+    "grunt-cli": "^0.1.13",
     "grunt-concurrent": "^0.3.1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-coffee": "^0.7.0",
@@ -42,18 +43,17 @@
     "grunt-ngmin": "~0.0.2",
     "grunt-open": "~0.2.0",
     "grunt-rev": "~0.1.0",
+    "grunt-sonar-runner": "~2.4.1",
     "grunt-svgmin": "^0.2.1",
     "grunt-usemin": "^0.1.13",
-    "matchdep": "^0.1.2",
+    "jasmine-core": "~2.1.3",
     "karma": "^0.12.16",
-    "karma-jasmine": "~0.3.4",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-firefox-launcher": "^0.1.4",
     "karma-coverage": "~0.2.7",
-    "karma-junit-reporter": "~0.2.2",
-    "codeclimate-test-reporter": "0.0.4",
-    "grunt-sonar-runner": "~2.4.1",
-    "jasmine-core": "~2.1.3"
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-jasmine": "~0.3.4",
+    "karma-junit-reporter": "^0.2.2",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "matchdep": "^0.1.2"
   },
   "engines": {
     "node": ">=0.8.0"

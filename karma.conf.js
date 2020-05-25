@@ -33,14 +33,14 @@ module.exports = function (config) {
 
         autoWatch: true,
 
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],
 
         junitReporter: {
             outputFile: 'build/reports/unit/unit.xml',
             suite: 'unit'
         },
 
-        reporters: ['progress', 'coverage', 'junit'],
+        reporters: ['progress', 'junit'],
 
         coverageReporter: {
             // specify a common output directory

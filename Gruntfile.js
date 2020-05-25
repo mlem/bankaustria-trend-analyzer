@@ -87,13 +87,14 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 options: {
+                    reporters: ['progress', 'coverage', 'junit'],
                     configFile: 'karma.conf.js',
                     singleRun: true,
+                    browsers: ['PhantomJS'],
                     plugins:[
                         'karma-jasmine',
                         'karma-coverage',
                         'karma-phantomjs-launcher',
-                        'karma-chrome-launcher',
                         'karma-junit-reporter'
                     ]
                 }

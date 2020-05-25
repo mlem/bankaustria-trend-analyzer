@@ -147,6 +147,23 @@ describe('controllers', function () {
 
         });
 
+
+        it('can import files with different titles', function () {
+            var smallCsvText = 'EZ;Buchungsdatum;Valutadatum;Buchungstext;Interne Notiz;Währung;Betrag;Belegdaten;Belegnummer;Auftraggebername;Auftraggeberkonto;Auftraggeber BIC;Empfängername;Empfängerkonto;Empfänger BIC;Zahlungsgrund;\r\n'+
+            '28.02.2020;28.02.2020; SEPA Lastschrift a/Hutchison Drei Austria GmbH                                                                                                                                                                                                                ;;EUR;-20,25;SEPA LASTSCHRIFT                                             Belegnr.: 123.123.123                                            28.02.2020                EUR    1234 123 123 123  Zahlungspfl.: mlem                                           !                SomeAddress 123/123, AT-1320,Wien,Aus                    !          IBAN: AT1234567897                 BIC: BLABLUB     !            ID:                                                           !                                                                          ! Zahlungsgrund:                                                           !                                                                          !                                                                          !  Zahlungsref.:                                                           !   Mandatsref.: 2025                                          ! Zahlungsempf.: Hutchison Drei Austria GmbH                               !                                                                          !          IBAN: AT893100000400292896                 BIC: RZBAATWW        ! Valuta:28.02            ID:                                                           !                                                                          !           CID: AT34ZZZ00000018433 SEPA                                   ! Betrag:     EUR Zahlungszweck:                                                           !           20,25;\'123456789797;Hutchison Drei Austria GmbH                                                                                                                                                                             ;AT1234565456              ;BLUBBST   ;mlem                       SomeAddress 123/123, AT-1320,Wien,Aus                                                                                                                            ;AT1234123123             ;BLABLUB;                                                                                                                                                                                                                                                ;';
+
+            var event = {target: {result: smallCsvText}};
+            scope.bookingitems = bookingItemsFactory.build();
+            scope.loadData(event);
+            expect(scope.bookingitems.items.length).toBe(1);
+            expect(scope.bookingitems.items[0].currentbalance).toBe(0);
+            expect(scope.bookingitems.items[0].previousbalance).toBe(20.25);
+            expect(scope.bookingitems.items[0].bookingdate).toBe(1582848000000);
+            expect(scope.bookingitems.items[0].accountchange).toBe(-20.25);
+            expect(scope.bookingitems.items[0].bookingtext).toBe('SEPA Lastschrift a/Hutchison Drei Austria GmbH');
+
+        });
+
         it('is not parsing anymore if it has already a number', function () {
             var parseBalance = scope.parseBalance(-123.45);
             expect(parseBalance).toBe(-123.45);

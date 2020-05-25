@@ -3,7 +3,7 @@ angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [
     'bankaustriaTrendAnalyzer.model',
     'bankaustriaTrendAnalyzer.converter',
     'bankaustriaTrendAnalyzer.import'
-    
+
 ])
     .controller('BankListController', ['$scope', 'BookingItems', 'BookingItem', 'BankAustriaConverter', 'csvReaderService',
         function ($scope, BookingItems, BookingItem, BankAustriaConverter, csvReaderService) {
@@ -42,7 +42,7 @@ angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [
                     obj.id = parseInt(obj.id, 10);
 
                     // nice solution from stackoverflow: http://stackoverflow.com/questions/5396560/how-do-i-convert-special-utf-8-chars-to-their-iso-8859-1-equivalent-using-javasc
-                    obj.bookingtext = decodeURIComponent(escape(obj.bookingtext));
+                    obj.bookingtext = decodeURIComponent(escape(obj.bookingtext.trim()));
                     obj.hash = parseInt(obj.hash, 10);
                     result.push(BookingItem.build(obj));
                 }
@@ -51,6 +51,9 @@ angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [
 
             $scope.loadData = function (event) {
                 var textFromFile = event.target.result;
+                if (textFromFile.indexOf("EZ;") === 0) {
+                    textFromFile = textFromFile.replace(/^EZ;/, '');
+                }
                 var values = csvReaderService.asObjects(textFromFile);
                 if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext") >= 0) {
                     $scope.bookingitems.merge(bankAustriaConverter.convertAll(values));

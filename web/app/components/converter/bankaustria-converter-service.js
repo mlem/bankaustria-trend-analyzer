@@ -16,7 +16,7 @@ angular.module('bankaustriaTrendAnalyzer.converter.bankaustria-converter-factory
             var object = {};
             object.bookingdate = date.getTime();
             object.accountchange = parsedAmount;
-            object.bookingtext = value['Buchungstext '];
+            object.bookingtext = !!value['Buchungstext '] ? value['Buchungstext '] : value['Buchungstext'];
             return BookingItem.build(object);
         };
 

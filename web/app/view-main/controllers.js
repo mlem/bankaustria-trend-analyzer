@@ -52,7 +52,7 @@ angular.module('bankaustriaTrendAnalyzer.controller.BankListController', [
             $scope.loadData = function (event) {
                 var textFromFile = event.target.result;
                 var values = csvReaderService.asObjects(textFromFile);
-                if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext ;Interne Notiz;") >= 0) {
+                if (textFromFile.indexOf("Buchungsdatum;Valutadatum;Buchungstext") >= 0) {
                     $scope.bookingitems.merge(bankAustriaConverter.convertAll(values));
                     $scope.calculateFromEnd($scope.currentbalance);
                 } else if (textFromFile.indexOf("artificialId;bookingdate;accountchange;bookingtext;currentbalance;previousbalance;hash") >= 0) {
